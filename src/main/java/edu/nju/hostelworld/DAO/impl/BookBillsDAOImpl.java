@@ -34,6 +34,6 @@ public class BookBillsDAOImpl extends FatherDAOImpl implements BookBillDAO {
     }
 
     public ResultMessage update(BookBill bookBill) {
-        return update(bookBill);
+        return super.update(bookBill);
     }
 }

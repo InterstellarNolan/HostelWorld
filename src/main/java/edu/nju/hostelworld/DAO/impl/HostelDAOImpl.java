@@ -34,6 +34,6 @@ public class HostelDAOImpl extends FatherDAOImpl implements HostelDAO {
     }
 
     public ResultMessage update(Hostel hostel) {
-        return update(hostel);
+        return super.update(hostel);
     }
 }

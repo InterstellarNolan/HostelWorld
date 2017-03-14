@@ -35,7 +35,7 @@ public class MemberDAOImpl extends FatherDAOImpl implements MemberDAO {
     }
 
     public ResultMessage update(Member member) {
-        return update(member);
+        return super.update(member);
     }
 
     public List<Member> getAll() {

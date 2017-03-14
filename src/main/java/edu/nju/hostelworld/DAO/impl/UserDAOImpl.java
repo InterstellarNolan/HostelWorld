@@ -34,6 +34,6 @@ public class UserDAOImpl extends FatherDAOImpl implements UserDAO{
     }
 
     public ResultMessage update(User user) {
-        return update(user);
+        return super.update(user);
     }
 }

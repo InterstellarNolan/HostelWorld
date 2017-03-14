@@ -40,6 +40,6 @@ public class ManagerDAOImpl extends FatherDAOImpl implements ManagerDAO {
 
     @Override
     public ResultMessage update(Manager member) {
-        return update(member);
+        return super.update(member);
     }
 }

@@ -34,6 +34,6 @@ public class LiveBillsDAOImpl extends FatherDAOImpl implements LiveBillDAO {
     }
 
     public ResultMessage update(LiveBill liveBill) {
-        return update(liveBill);
+        return super.update(liveBill);
     }
 }

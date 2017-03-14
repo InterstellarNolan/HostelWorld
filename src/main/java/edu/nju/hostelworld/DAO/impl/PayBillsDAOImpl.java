@@ -34,6 +34,6 @@ public class PayBillsDAOImpl extends FatherDAOImpl implements PayBillDAO {
     }
 
     public ResultMessage update(PayBill payBill) {
-        return update(payBill);
+        return super.update(payBill);
     }
 }

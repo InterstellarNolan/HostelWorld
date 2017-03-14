@@ -39,7 +39,7 @@ public class Hostel {
 
 
     @Basic
-    @Column(name = "userid", nullable = false, length = 255)
+    @Column(name = "userid", nullable = false)
     public int getUserid() {
         return userid;
     }

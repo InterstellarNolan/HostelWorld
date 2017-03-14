@@ -30,7 +30,7 @@ public class Manager {
     }
 
     @Basic
-    @Column(name = "id", nullable = false)
+    @Column(name = "userid", nullable = false)
     public int getUserId() {
         return userId;
     }
