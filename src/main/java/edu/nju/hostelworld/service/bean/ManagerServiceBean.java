@@ -1,0 +1,143 @@
+package edu.nju.hostelworld.service.bean;
+
+import edu.nju.hostelworld.DAO.*;
+import edu.nju.hostelworld.entity.*;
+import edu.nju.hostelworld.service.HostelService;
+import edu.nju.hostelworld.service.ManagerService;
+import edu.nju.hostelworld.service.UserService;
+import edu.nju.hostelworld.util.RequestState;
+import edu.nju.hostelworld.util.ResultMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/**
+ * Created by Administrator on 17/3/3.
+ */
+@Transactional
+@Service
+public class ManagerServiceBean implements ManagerService {
+    @Override
+    public ResultMessage init(int managerId) {
+        return null;
+    }
+
+    @Override
+    public List<RequestOpen> getOpenRequests() {
+        return requestDao.getOpenRequestByRestrictEqual("state", RequestState.UNCHECK.toString());
+    }
+
+    @Override
+    public List<RequestModify> getModifyRequests() {
+        return requestDao.getModifyRequestByRestrictEqual("state", RequestState.UNCHECK.toString());
+    }
+
+    @Override
+    public ResultMessage updateOpenRequest(RequestOpen request) {
+        RequestState requestState = RequestState.strToRequestState(request.getState());
+        if (requestState == RequestState.DENIED) {//拒绝申请
+            return requestDao.updateOpenRequest(request);
+        } else if (requestState == RequestState.APPROVED) {//同意申请
+            Hostel hostel = request.getHostel();
+            hostel.setPermitted(true);
+            ResultMessage msg1 = hostelDao.update(hostel);
+            ResultMessage msg2 = requestDao.updateOpenRequest(request);
+            if (msg1 == ResultMessage.SUCCESS && msg2 == ResultMessage.SUCCESS) {
+                return ResultMessage.SUCCESS;
+            } else {
+                return ResultMessage.FAILURE;
+            }
+        } else {//没审核。。。
+            return ResultMessage.SUCCESS;
+        }
+    }
+
+    @Override
+    public ResultMessage updateModifyRequest(RequestModify request) {
+        RequestState requestState = RequestState.strToRequestState(request.getState());
+        if (requestState == RequestState.DENIED) {//拒绝修改请求
+            return requestDao.updateModifyRequest(request);
+        } else if (requestState == RequestState.APPROVED) {//同意修改请求
+            ResultMessage msg1 = hostelDao.update(request.getHostelNew());
+            ResultMessage msg2 = requestDao.updateModifyRequest(request);
+            if (msg1 == ResultMessage.SUCCESS && msg2 == ResultMessage.SUCCESS) {
+                return ResultMessage.SUCCESS;
+            } else {
+                return ResultMessage.FAILURE;
+            }
+        } else {//没审核。。。
+            return ResultMessage.SUCCESS;
+        }
+    }
+
+    @Override
+    public ResultMessage count(int managerId, String bankPassword) {
+        User manager = userDao.get(managerId);
+        if (!manager.getBankPassword().equals(bankPassword)) {
+            return ResultMessage.WRONG_PASSWORD;//银行卡密码错误
+        } else {//结算到今天为止的
+            ResultMessage msg;
+            List<Hostel> hostels = hostelService.getAllPermittedHostels();
+            //经理结算的总金额
+            double allMoneyToPay = 0;
+            for (Hostel hostel : hostels) {
+                //获取客栈的`未结算金额`
+                double moneyShouldBePaid = hostel.getMoneyUncounted();
+                //给客栈加钱
+                msg = userService.changeBankMoneyAdd(hostel.getId(), moneyShouldBePaid);
+                if (msg != ResultMessage.SUCCESS) return msg;
+                //计算累计结算的钱数，最后一起从总经理的银行卡上扣除
+                allMoneyToPay += moneyShouldBePaid;
+                //将客栈的`未结算金额`置为0
+                hostel.setMoneyUncounted(0);
+                //更新客栈信息
+                msg = hostelDao.update(hostel);
+                if (msg != ResultMessage.SUCCESS) return msg;
+            }
+            if (allMoneyToPay == 0) {
+                return ResultMessage.NO_NEED_COUNT;
+            }
+            msg = userService.changeBankMoneyMinus(managerId, allMoneyToPay);
+            if (msg != ResultMessage.SUCCESS) return msg;
+//       -------到这里其实客栈和总经理之间的金钱交易就结束了，不过还要更新一下被结算的账单的状态orz，而且这一步会比较慢。。。
+//            为了总经理可以查看某个客栈的结算细节--账单信息，必须得更新这个状态位~！
+            List<PayBill> payBills = payBillDao.getByRestrictEqual("counted", false);
+            for (PayBill payBill : payBills) {
+                payBill.setCounted(true);
+                msg = payBillDao.update(payBill);
+                if (msg != ResultMessage.SUCCESS) return msg;
+            }
+            return ResultMessage.SUCCESS;
+        }
+
+    }
+
+
+    @Override
+    public List<Hostel> getAllPermittedHostels() {
+        return hostelService.getAllPermittedHostels();
+    }
+
+
+    @Override
+    public List<Member> getAllMembers() {
+        return vipDao.getAll();
+    }
+
+    @Autowired
+    private HostelDAO hostelDao;
+    @Autowired
+    private PayBillDAO payBillDao;
+    @Autowired
+    private MemberDAO vipDao;
+    @Autowired
+    private UserDAO userDao;
+    @Autowired
+    private RequestDAO requestDao;
+    @Autowired
+    private HostelService hostelService;
+    @Autowired
+    private UserService userService;
+}
