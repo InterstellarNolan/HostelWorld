@@ -25,8 +25,6 @@ public class User {
 
     public void setUserid(int userid) {
         this.userid = userid;
-        String bankId = "111111111111" + id;
-        setBankId(bankId);
     }
 
     private String bankId;//AutoSet = 111111111111 + id

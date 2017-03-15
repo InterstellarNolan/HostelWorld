@@ -50,9 +50,9 @@ public class Constants {
         }else if(level<=4){
             return 0.85;
         }else if(level<=7){
-            return 0.7;
+            return 0.8;
         }else {
-            return 0.5;
+            return 0.75;
         }
     }
 

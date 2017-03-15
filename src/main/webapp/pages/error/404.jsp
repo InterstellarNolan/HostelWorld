@@ -11,7 +11,7 @@
 <div class="login">
     <div class="message">HostelWorld</div>
     <div id="bannerwrap"></div>
-    <div id="message">用户名已使用</div>
+    <div id="message">操作失败</div>
     <br>
     <br>
     <div id="nav">

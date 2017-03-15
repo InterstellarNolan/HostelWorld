@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "hostel", schema = "hostelworld", catalog = "")
 public class Hostel {
-    private int id;
+    private int id = 6000000;
     private int userid;
     private boolean permitted = false;
     private String img;
@@ -34,7 +34,7 @@ public class Hostel {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id = this.id + id;
     }
 
 

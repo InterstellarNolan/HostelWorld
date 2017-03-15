@@ -123,7 +123,7 @@ public class UserServiceBean implements UserService {
     public ResultMessage changeBankMoneyMinus(int id, double money) {
         User user = userDao.get(id);
         System.out.println(user.getBankMoney());
-        user.setBankMoney(user.getBankMoney()-money);
+        user.setBankMoney(user.getBankMoney() - money);
         System.out.println(user.getBankMoney());
         return userDao.update(user);
     }
@@ -176,5 +176,10 @@ public class UserServiceBean implements UserService {
         } else if (users.size() == 0) {
             return ResultMessage.NOT_EXIST;
         } else return ResultMessage.SUCCESS;
+    }
+
+    @Override
+    public ResultMessage update(User user) {
+        return userDao.update(user);
     }
 }

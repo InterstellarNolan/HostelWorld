@@ -32,7 +32,7 @@ public class MemberServiceBean implements MemberService {
 
     @Override
     public void init(int memberId) {
-        //TODO 写完了 但是没测试
+
         Member vip = getById(memberId);
         MemberState vipState = MemberState.strToMemberState(vip.getState());
         if (vipState == MemberState.UNACTIVATED || vipState == MemberState.STOP) {

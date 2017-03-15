@@ -107,4 +107,10 @@ public interface UserService {
      * @return NOT_EXIST, SUCCESS
      */
     public ResultMessage checkUserExist(String userName);
+
+    /**
+     * @param user
+     * @return
+     */
+    public ResultMessage update(User user);
 }

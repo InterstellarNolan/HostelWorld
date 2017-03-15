@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "member", schema = "hostelworld", catalog = "")
 public class Member {
-    private int id;
+    private int id = 1000000;
     private int userid;
     private String realName = "匿名";
     private String idCard = "111111197001011111";
@@ -38,19 +38,20 @@ public class Member {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id = this.id + id;
     }
 
 
-      @Basic
-      @Column(name = "userid", nullable = false, length = 255)
-     public int getUserid() {
-      return userid;
-      }
+    @Basic
+    @Column(name = "userid", nullable = false, length = 255)
+    public int getUserid() {
+        return userid;
+    }
 
-      public void setUserid(int userid) {
-      this.userid = userid;
-      }
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
     @Basic
     @Column(name = "realName", nullable = false, length = 255)
     public String getRealName() {

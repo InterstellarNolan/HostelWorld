@@ -38,7 +38,6 @@ public class LoginController {
 
     @RequestMapping(value = "/logout")
     public ModelAndView logout(HttpSession session) {
-        //TODO 现在是假的注销！
         session.removeAttribute("vip");
         session.removeAttribute("user");
         return new ModelAndView("login", "command", new UserVO());
@@ -59,7 +58,7 @@ public class LoginController {
         } else {//验证通过
             User user = userService.login(name, password);
             OnLineUserVO onLineUserVO = new OnLineUserVO(user.getId(), user.getUserName(), user.getType());
-            session.setAttribute("user", onLineUserVO);
+            session.setAttribute("userVO", onLineUserVO);
             if (user.getType().equals("member")) {
                 vipService.init(user.getId());
             }
@@ -72,21 +71,22 @@ public class LoginController {
         int id = use.getUserid();
         switch (user.getType()) {
             case "member":
-                vipService.init(id);//TODO 这个方法没测试过
+                vipService.init(id);
                 Member vip = vipService.getById(id);
                 MemberVO vipVO = new MemberVO(vip);
-                session.setAttribute("member", vipVO);
-                return new ModelAndView("redirect:/member/hostels");
+                session.setAttribute("memberVO", vipVO);
+                return new ModelAndView("redirect:/member/home");
             case "hostel":
                 ResultMessage initMsg = hostelService.init(id);
                 Hostel hostel = hostelService.getById(id);
                 HostelVO hostelVO = new HostelVO(hostel);
-                session.setAttribute("hostel", hostelVO);
-                return new ModelAndView("redirect:/hostel/rooms");
+                session.setAttribute("hostelVO", hostelVO);
+                return new ModelAndView("redirect:/hostel/home");
             case "manager":
                 return new ModelAndView("manager/index");
             default:
                 return new ModelAndView("404");
         }
     }
+
 }
