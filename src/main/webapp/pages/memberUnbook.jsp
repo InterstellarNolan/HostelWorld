@@ -17,7 +17,7 @@
         <ul>
             <li><a href="<%=request.getContextPath()%>/member/home">基本信息</a></li>
             <li><a href="<%=request.getContextPath()%>/member/hostels">看看客栈</a></li>
-            <li><a href="#">退订</a></li>
+            <li><a href="#">退订房间</a></li>
             <li><a href="<%=request.getContextPath()%>/member/analysis">统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/member/edit">修改资料</a></li>
             <li><a href="<%=request.getContextPath()%>/member/charge">会员卡充值</a></li>
@@ -33,9 +33,9 @@
         <td>入住日期</td>
         <td>房间类型</td>
         <td>房间价格</td>
-        <td>退订</td>
+        <td>房间已订</td>
     </tr>
-    <c:forEach items="${true}" var="bitem">
+    <c:forEach items="${truelist}" var="bitem">
         <tr>
             <td>${bitem.hostelName}</td>
             <td>${bitem.hostelAddress}</td>
@@ -43,9 +43,10 @@
             <td>${bitem.liveInDate}</td>
             <td>${bitem.roomName}</td>
             <td>${bitem.roomPrice}</td>
-            <td><a href="<%=request.getContextPath()%>/hostel/unbook/${bitem.id}">${bitem.valid}</a></td>
+            <td><a href="<%=request.getContextPath()%>/member/unbook/${bitem.id}">退订</a></td>
         </tr>
     </c:forEach>
 </table>
+
 </body>
 </html>

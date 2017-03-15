@@ -16,7 +16,7 @@
         <ul>
             <li><a href="#">基本信息</a></li>
             <li><a href="<%=request.getContextPath()%>/member/hostels">看看客栈</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/unbook">退订</a></li>
+            <li><a href="<%=request.getContextPath()%>/member/unbook">退订房间</a></li>
             <li><a href="<%=request.getContextPath()%>/member/analysis">统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/member/edit">修改资料</a></li>
             <li><a href="<%=request.getContextPath()%>/member/charge">会员卡充值</a></li>

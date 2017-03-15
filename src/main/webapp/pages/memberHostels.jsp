@@ -17,7 +17,7 @@
         <ul>
             <li><a href="<%=request.getContextPath()%>/member/home">基本信息</a></li>
             <li><a href="#">看看客栈</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/unbook">退订</a></li>
+            <li><a href="<%=request.getContextPath()%>/member/unbook">退订房间</a></li>
             <li><a href="<%=request.getContextPath()%>/member/analysis">统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/member/edit">修改资料</a></li>
             <li><a href="<%=request.getContextPath()%>/member/charge">会员卡充值</a></li>
@@ -36,7 +36,7 @@
     </tr>
     <c:forEach items="${hostellist}" var="item">
         <tr>
-            <td><a href="<%=request.getContextPath()%>/hostel/home/${item.id}">${item.id}</a></td>
+            <td><a href="<%=request.getContextPath()%>/hostel/home/${item.id}">${item.userID}</a></td>
             <td>${item.name}</td>
             <td>${item.address}</td>
             <td>${item.phone}</td>

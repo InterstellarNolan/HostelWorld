@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -151,7 +152,7 @@ public class MemberController {
         return new ModelAndView("memberHostels");
     }
 
-    @RequestMapping(value = "/unbook", method = RequestMethod.GET)
+    @RequestMapping(value = "/unbook")
     public ModelAndView unbookPage(Model model, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
@@ -166,5 +167,14 @@ public class MemberController {
         }
         model.addAttribute("truelist", truelist);
         return new ModelAndView("memberUnbook");
+    }
+
+    @RequestMapping(value = "/unbook/{id}")
+    public ModelAndView unbook(ModelMap model, @PathVariable("id") String id, HttpServletRequest request) {
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Member member = memberService.getById(user.getUserid());
+        memberService.unbook(member.getId(), Integer.parseInt(id));
+        return new ModelAndView("redirect:/member/unbook");
     }
 }
