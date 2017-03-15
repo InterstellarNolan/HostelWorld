@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "manager", schema = "hostelworld", catalog = "")
 public class Manager {
-    private int id = 9000000;
-    private int userId;
+    private int id ;
+    private int userId= 7000000;
     private String name;
     private String phone = "76668888";
     private String address = "北京";
@@ -26,7 +26,7 @@ public class Manager {
     }
 
     public void setId(int id) {
-        this.id = this.id + id;
+        this.id =  id;
     }
 
     @Basic
@@ -36,7 +36,7 @@ public class Manager {
     }
 
     public void setUserId(int userId) {
-        this.userId = userId;
+        this.userId = this.userId+id;
     }
 
     @Basic

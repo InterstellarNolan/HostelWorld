@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "hostel", schema = "hostelworld", catalog = "")
 public class Hostel {
-    private int id = 6000000;
-    private int userid;
+    private int id;
+    private int userid = 6000000;
     private boolean permitted = false;
     private String img;
     private String phone = "66668888";
@@ -34,7 +34,7 @@ public class Hostel {
     }
 
     public void setId(int id) {
-        this.id = this.id + id;
+        this.id = id;
     }
 
 
@@ -45,7 +45,7 @@ public class Hostel {
     }
 
     public void setUserid(int userid) {
-        this.userid = userid;
+        this.userid = this.userid + id;
     }
 
 
