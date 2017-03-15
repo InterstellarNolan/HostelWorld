@@ -8,10 +8,10 @@ import javax.persistence.*;
  * Created by Administrator on 2017/3/12.
  */
 @Entity
-@Table(name = "manager", schema = "hostelworld", catalog = "")
+@Table(name = "manager", schema = "hostelworldnew", catalog = "")
 public class Manager {
     private int id ;
-    private int userId= 7000000;
+    private int userId= 3000000;
     private String name;
     private String phone = "76668888";
     private String address = "北京";
@@ -27,6 +27,7 @@ public class Manager {
 
     public void setId(int id) {
         this.id =  id;
+        this.userId=this.userId+id;
     }
 
     @Basic
@@ -36,7 +37,7 @@ public class Manager {
     }
 
     public void setUserId(int userId) {
-        this.userId = this.userId+id;
+        this.userId = userId;
     }
 
     @Basic

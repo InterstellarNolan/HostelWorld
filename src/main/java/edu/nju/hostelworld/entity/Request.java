@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Created by Administrator on 2017/3/11.
  */
 @Entity
-@Table(name = "request", schema = "hostelworld", catalog = "")
+@Table(name = "request", schema = "hostelworldnew", catalog = "")
 
 public class Request {
     private int id;

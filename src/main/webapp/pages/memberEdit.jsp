@@ -15,7 +15,7 @@
     <nav>
         <ul>
             <li><a href="<%=request.getContextPath()%>/member/home">基本信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/book">订房</a></li>
+            <li><a href="<%=request.getContextPath()%>/member/hostels">看看客栈</a></li>
             <li><a href="<%=request.getContextPath()%>/member/unbook">退订</a></li>
             <li><a href="<%=request.getContextPath()%>/member/analysis">统计信息</a></li>
             <li><a href="#">修改资料</a></li>
@@ -57,6 +57,8 @@
         </table>
         <input type="submit" value="更改">
     </form>
+    <div id="message1">${message1}</div>
+    <div id="message2">${message2}</div>
 </div>
 </body>
 </html>

@@ -10,16 +10,16 @@ import java.util.List;
  * 客栈
  */
 @Entity
-@Table(name = "hostel", schema = "hostelworld", catalog = "")
+@Table(name = "hostel", schema = "hostelworldnew", catalog = "")
 public class Hostel {
     private int id;
-    private int userid = 6000000;
+    private int userid = 2000000;
     private boolean permitted = false;
     private String img;
     private String phone = "66668888";
     private String address = "南京";
-    private String name;
-    private double moneyUncounted;
+    private String name="快来客栈";
+    private double moneyUncounted=0;
     private List<BookBill> bookBills;
     private List<LiveBill> liveBills;
     private List<PayBill> payBills;
@@ -35,6 +35,7 @@ public class Hostel {
 
     public void setId(int id) {
         this.id = id;
+        this.userid = id + userid;
     }
 
 
@@ -45,7 +46,7 @@ public class Hostel {
     }
 
     public void setUserid(int userid) {
-        this.userid = this.userid + id;
+        this.userid =  userid;
     }
 
 
@@ -109,7 +110,7 @@ public class Hostel {
         this.moneyUncounted = name;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -123,7 +124,7 @@ public class Hostel {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
-    }
+    }*/
 
 
     @OneToMany(mappedBy = "hostel")
@@ -161,4 +162,6 @@ public class Hostel {
     public void setRooms(List<HostelRoom> rooms) {
         this.rooms = rooms;
     }
+
+
 }

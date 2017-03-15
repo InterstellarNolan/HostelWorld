@@ -2,6 +2,7 @@ package edu.nju.hostelworld.controller;
 
 import edu.nju.hostelworld.entity.Member;
 import edu.nju.hostelworld.entity.User;
+import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.service.UserService;
 import edu.nju.hostelworld.util.Constants;
@@ -13,10 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import vo.BookBillVO;
-import vo.LiveBillVO;
-import vo.OnLineUserVO;
-import vo.PayBillVO;
+import vo.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -32,13 +30,14 @@ public class MemberController {
     MemberService memberService;
     @Autowired
     UserService userService;
+    @Autowired
+    HostelService hostelService;
 
     @RequestMapping(value = "/home")
     public ModelAndView homePage(Model model, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
-
         model.addAttribute("member", member);
         model.addAttribute("user", user);
         double discount = Constants.VIP_LEVEL_TO_DISCOUNT(member.getLevel());
@@ -66,52 +65,58 @@ public class MemberController {
         ResultMessage r1, r2;
         if (money == 0 && sc == 0) {
             model.addAttribute("message", r1 = ResultMessage.NOT_CHANGE);
+            model.addAttribute("member", member);
             return new ModelAndView("memberCharge");
-
         } else if (money != 0 && sc == 0) {
-
-
             r1 = memberService.charge(money, member.getId(), bankpassword);
+            Member member1 = memberService.getById(user.getUserid());
+            model.addAttribute("member", member1);
             model.addAttribute("message", r1.toShow());
             return new ModelAndView("memberCharge");
         } else if (money == 0) {
-
             r1 = memberService.scoreToMoney(member.getId(), sc);
+            Member member2 = memberService.getById(user.getUserid());
+            model.addAttribute("member", member2);
             model.addAttribute("message", r1.toShow());
             return new ModelAndView("memberCharge");
         } else {
-
             r1 = memberService.charge(money, member.getId(), bankpassword);
             r2 = memberService.scoreToMoney(member.getId(), sc);
+            Member member3 = memberService.getById(user.getUserid());
+            model.addAttribute("member", member3);
             model.addAttribute("message", r1.toShow() + "  " + r2.toShow());
             return new ModelAndView("memberCharge");
         }
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editPage(Model model, HttpServletRequest request) {
+    public ModelAndView editPage(Model model, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
         model.addAttribute("member", member);
         model.addAttribute("user", user);
-        return "memberEdit";
+        return new ModelAndView("memberEdit");
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit(String name, String bankcard, HttpServletRequest request) {
+    public ModelAndView edit(ModelMap model, String name, String bankcard, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
         member.setRealName(name);
         user.setBankId(bankcard);
-        memberService.update(member);
-        userService.update(user);
-        return "memberEdit";
+        ResultMessage r1 = memberService.update(member);
+        ResultMessage r2 = userService.update(user);
+        model.addAttribute("member", member);
+        model.addAttribute("user", user);
+        model.addAttribute("message1", "更改姓名" + r1.toShow());
+        model.addAttribute("message2", "更改银行账号" + r2.toShow());
+        return new ModelAndView("memberEdit");
     }
 
     @RequestMapping(value = "/analysis")
-    public String analysisPage(Model model, HttpServletRequest request) {
+    public ModelAndView analysisPage(Model model, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
@@ -126,6 +131,13 @@ public class MemberController {
         }
         model.addAttribute("checkInbillVO", checkInbillVO);
         model.addAttribute("checkOutbillVO", checkOutbillVO);
-        return "memberAnalysis";
+        return new ModelAndView("memberAnalysis");
     }
+    @RequestMapping(value = "/hostels")
+    public ModelAndView hostelsList(Model model,HttpServletRequest request){
+
+        model.addAttribute("hostellist", HostelVO.entityToVO(hostelService.getAllPermittedHostels()));
+        return new ModelAndView("memberHostels");
+    }
+
 }

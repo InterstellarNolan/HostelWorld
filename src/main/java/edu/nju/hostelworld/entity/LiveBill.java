@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by Administrator on 2017/3/11.
  */
 @Entity
-@Table(name = "livebill", schema = "hostelworld", catalog = "")
+@Table(name = "livebill", schema = "hostelworldnew", catalog = "")
 public class LiveBill {
     private int id;
     //true代表入店，false代表离店

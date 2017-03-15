@@ -11,7 +11,7 @@ import java.util.List;
  * 会员
  */
 @Entity
-@Table(name = "member", schema = "hostelworld", catalog = "")
+@Table(name = "member", schema = "hostelworldnew", catalog = "")
 public class Member {
     private int id;
     private int userid = 1000000;
@@ -39,6 +39,7 @@ public class Member {
 
     public void setId(int id) {
         this.id = id;
+        this.userid = id + userid;
     }
 
 
@@ -49,7 +50,7 @@ public class Member {
     }
 
     public void setUserid(int userid) {
-        this.userid = this.userid + id;
+        this.userid = userid;
     }
 
     @Basic

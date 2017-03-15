@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "user", schema = "hostelworld", catalog = "")
+@Table(name = "user", schema = "hostelworldnew", catalog = "")
 public class User {
     private int userid;//对应Member、Manager或者Hostel的
     private int id;

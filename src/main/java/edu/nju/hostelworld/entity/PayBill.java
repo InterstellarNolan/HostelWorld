@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by Administrator on 2017/3/11.
  */
 @Entity
-@Table(name = "paybill", schema = "hostelworld", catalog = "")
+@Table(name = "paybill", schema = "hostelworldnew", catalog = "")
 public class PayBill {
     private int id;
     private boolean counted=false;

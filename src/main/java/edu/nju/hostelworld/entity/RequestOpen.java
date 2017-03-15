@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by disinuo on 17/3/11.
  */
 @Entity
-@Table(name = "request_open", schema = "hostelworld", catalog = "")
+@Table(name = "request_open", schema = "hostelworldnew", catalog = "")
 
 public class RequestOpen {
     private int id;
