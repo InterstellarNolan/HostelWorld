@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <title>Hostel World</title>
@@ -23,35 +24,26 @@
         </ul>
     </nav>
 </div>
-<div>
 
-    <table border="2">
-        <tr>
-            <td>客栈编号</td>
-        </tr>
-        <tr>
-            <td>客栈名称</td>
-        </tr>
-        <tr>
-            <td>客栈地址</td>
-        </tr>
-        <tr>
-            <td>联系电话</td>
-        </tr>
-        <tr>
-            <td>房间数量</td>
-        </tr>
-    </table>
-    <c:forEach items="${hostellist}" var="ciitem">
-    <a>
-        <td><a href="<%=request.getContextPath()%>/hostel/home/${ciitem.id}">${ciitem.id}</a></td>
-        <td>${ciitem.name}</td>
-        <td>${ciitem.address}</td>
-        <td>${ciitem.phone}</td>
-        <td>${ciitem.roomnumber}</td>
-        </tr>
-        </c:forEach>
+<table border="2">
+    <tr>
+        <td>客栈编号</td>
+        <td>客栈名称</td>
+        <td>客栈地址</td>
+        <td>联系电话</td>
+        <td>房间数量</td>
 
-</div>
+    </tr>
+    <c:forEach items="${hostellist}" var="item">
+        <tr>
+            <td>${item.userID}</td>
+            <td>${item.name}</td>
+            <td>${item.address}</td>
+            <td>${item.phone}</td>
+            <td>${item.roomnumber}</td>
+        </tr>
+    </c:forEach>
+</table>
+
 </body>
 </html>

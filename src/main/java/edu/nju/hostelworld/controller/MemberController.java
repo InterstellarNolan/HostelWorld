@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.entity.Hostel;
 import edu.nju.hostelworld.entity.Member;
 import edu.nju.hostelworld.entity.User;
 import edu.nju.hostelworld.service.HostelService;
@@ -133,10 +134,17 @@ public class MemberController {
         model.addAttribute("checkOutbillVO", checkOutbillVO);
         return new ModelAndView("memberAnalysis");
     }
-    @RequestMapping(value = "/hostels")
-    public ModelAndView hostelsList(Model model,HttpServletRequest request){
 
-        model.addAttribute("hostellist", HostelVO.entityToVO(hostelService.getAllPermittedHostels()));
+    @RequestMapping(value = "/hostels")
+    public ModelAndView hostelsList(Model model, HttpServletRequest request) {
+        List<Hostel> list = hostelService.getAllPermittedHostels();
+        List<HostelVO> list1=HostelVO.entityToVO(list);
+        for (int i = 0; i < list1.size(); i++) {
+            System.out.println(list1.get(i).getId());
+        }
+        model.addAttribute("hostellist", list1);
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        model.addAttribute("userVO",userVO);
         return new ModelAndView("memberHostels");
     }
 

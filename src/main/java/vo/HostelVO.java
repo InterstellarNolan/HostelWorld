@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class HostelVO {
     private int id;
+    private int userID;
     private boolean permitted;
     private String img;
     private String phone;
@@ -28,11 +29,13 @@ public class HostelVO {
         this.name = hostelEntity.getName();
         this.moneyUncounted = hostelEntity.getMoneyUncounted();
         this.roomnumber = hostelEntity.getRooms().size();
+        this.userID = hostelEntity.getUserid();
     }
 
     public static List<HostelVO> entityToVO(List<Hostel> hostels) {
         List<HostelVO> res = new ArrayList<HostelVO>();
         for (Hostel hostel : hostels) {
+            System.out.println(hostel.getUserid());
             res.add(new HostelVO((hostel)));
         }
         return res;
@@ -68,5 +71,9 @@ public class HostelVO {
 
     public int getRoomnumber() {
         return roomnumber;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 }
