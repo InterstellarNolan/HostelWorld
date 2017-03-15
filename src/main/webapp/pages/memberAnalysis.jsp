@@ -34,6 +34,7 @@
         <td>入住日期</td>
         <td>房间类型</td>
         <td>房间价格</td>
+        <td>订单状态</td>
     </tr>
     <c:forEach items="${bookbillVO}" var="bitem">
         <tr>
@@ -43,6 +44,7 @@
             <td>${bitem.liveInDate}</td>
             <td>${bitem.roomName}</td>
             <td>${bitem.roomPrice}</td>
+            <td>${bitem.valid}</td>
         </tr>
     </c:forEach>
 </table> 

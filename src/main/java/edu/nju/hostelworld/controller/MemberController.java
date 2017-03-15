@@ -1,5 +1,6 @@
 package edu.nju.hostelworld.controller;
 
+import edu.nju.hostelworld.entity.BookBill;
 import edu.nju.hostelworld.entity.Hostel;
 import edu.nju.hostelworld.entity.Member;
 import edu.nju.hostelworld.entity.User;
@@ -121,7 +122,9 @@ public class MemberController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
-        model.addAttribute("bookbillVO", BookBillVO.entityToVO(memberService.getAllBookBills(member.getId())));
+        List<BookBill> bookbilllist = memberService.getAllBookBills(member.getId());
+        //model.addAttribute("booklistState", bookbillstatelist);
+        model.addAttribute("bookbillVO", BookBillVO.entityToVO(bookbilllist));
         model.addAttribute("paybillVO", PayBillVO.entityToVO(memberService.getAllPayBills(member.getId())));
         List<LiveBillVO> liveBillVOList = LiveBillVO.entityToVO(memberService.getAllLiveBills(member.getId()));
         List<LiveBillVO> checkInbillVO = new ArrayList<LiveBillVO>(), checkOutbillVO = new ArrayList<LiveBillVO>();
@@ -138,14 +141,30 @@ public class MemberController {
     @RequestMapping(value = "/hostels")
     public ModelAndView hostelsList(Model model, HttpServletRequest request) {
         List<Hostel> list = hostelService.getAllPermittedHostels();
-        List<HostelVO> list1=HostelVO.entityToVO(list);
+        List<HostelVO> list1 = HostelVO.entityToVO(list);
         for (int i = 0; i < list1.size(); i++) {
             System.out.println(list1.get(i).getId());
         }
         model.addAttribute("hostellist", list1);
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
-        model.addAttribute("userVO",userVO);
+        model.addAttribute("userVO", userVO);
         return new ModelAndView("memberHostels");
     }
 
+    @RequestMapping(value = "/unbook", method = RequestMethod.GET)
+    public ModelAndView unbookPage(Model model, HttpServletRequest request) {
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Member member = memberService.getById(user.getUserid());
+        List<BookBillVO> list = BookBillVO.entityToVO(memberService.getAllBookBills(member.getId()));
+        List<BookBillVO> truelist = new ArrayList<BookBillVO>();
+        for (int i = 0; i < list.size(); i++) {
+            BookBillVO temp = list.get(i);
+            if (temp.isValid()) {
+                truelist.add(temp);
+            }
+        }
+        model.addAttribute("truelist", truelist);
+        return new ModelAndView("memberUnbook");
+    }
 }
