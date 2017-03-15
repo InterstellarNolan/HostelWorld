@@ -31,6 +31,7 @@ public class HostelController {
         Hostel hostel = hostelService.getById(user.getUserid());
         model.addAttribute("hostel", hostel);
         model.addAttribute("user", user);
+        model.addAttribute("roomnumber", hostelService.getAllRooms(hostel.getId()).size());
         return new ModelAndView("hostelHome");
     }
 }

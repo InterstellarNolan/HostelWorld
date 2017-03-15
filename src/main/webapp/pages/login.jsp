@@ -30,7 +30,6 @@
             <li><a href="/register/manager">注册经理</a></li>
         </ul>
     </div>
-    <div id="message">${message}</div>
 </div>
 <%@include file="./common/tail.jsp" %>
 
