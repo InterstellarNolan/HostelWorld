@@ -101,4 +101,11 @@ public interface ManagerService {
      * @return
      */
     public Manager getById(int managerId);
+
+    /**
+     * 不区分类别
+     *
+     * @return
+     */
+    public List<RequestOpen> getAllOpenRequests();
 }

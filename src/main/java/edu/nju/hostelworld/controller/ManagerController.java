@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import vo.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,14 +64,9 @@ public class ManagerController {
 
     @RequestMapping(value = "requestOpen", method = RequestMethod.GET)
     public ModelAndView requestOpenPage(Model model, HttpServletRequest request) {
-        List<RequestOpen> requestOpenList = managerService.getOpenRequests();
-        List<RequestOpen> list = new ArrayList<RequestOpen>();
-        for (int i = 0; i < requestOpenList.size(); i++) {
-            RequestOpen open = requestOpenList.get(i);
-            if (open.getState().equals("UNCHECK")) {
-                list.add(open);
-            }
-        }
+        List<RequestOpen> list = managerService.getOpenRequests();
+
+
         //System.out.println();
         //System.out.println();
         //System.out.println();
@@ -85,14 +79,9 @@ public class ManagerController {
     @RequestMapping(value = "requestOpen/{id}", method = RequestMethod.POST)
     public ModelAndView requestOpen(@PathVariable("id") String id, Model model, HttpServletRequest request, String state) {
         ResultMessage rmsg = managerService.updateOpenRequest(Integer.parseInt(id), state);
-        List<RequestOpen> requestOpenList = managerService.getOpenRequests();
-        List<RequestOpen> list = new ArrayList<RequestOpen>();
-        for (int i = 0; i < requestOpenList.size(); i++) {
-            RequestOpen open = requestOpenList.get(i);
-            if (open.getState().equals("unchecked")) {
-                list.add(open);
-            }
-        }
+        List<RequestOpen> list = managerService.getOpenRequests();
+
+
         List<RequestOpenVO> VO = RequestOpenVO.entityToVO(list);
         model.addAttribute("Openlist", VO);
         model.addAttribute("message", rmsg.toShow());

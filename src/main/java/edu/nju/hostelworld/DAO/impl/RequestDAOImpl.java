@@ -16,6 +16,11 @@ import java.util.Map;
 public class RequestDAOImpl extends FatherDAOImpl implements RequestDAO {
 
     @Override
+    public List<RequestOpen> getAllOpenRequest() {
+        return getAll(RequestOpen.class);
+    }
+
+    @Override
     public RequestOpen getOpenRequest(int id) {
         return getEntity(RequestOpen.class, id);
     }

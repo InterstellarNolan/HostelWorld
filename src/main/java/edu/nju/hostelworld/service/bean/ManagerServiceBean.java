@@ -45,6 +45,10 @@ public class ManagerServiceBean implements ManagerService {
     }
 
     @Override
+    public List<RequestOpen> getAllOpenRequests() {
+        return requestDao.getAllOpenRequest();
+    }
+    @Override
     public List<RequestOpen> getOpenRequests() {
         return requestDao.getOpenRequestByRestrictEqual("state", RequestState.UNCHECK.toString());
     }
