@@ -57,7 +57,7 @@
 <h2>在本客栈消费的的付款记录</h2>
 <table border="2">
     <tr>
-        <td>会员编号</td>
+        <td>会员编号(0为贵宾付款)</td>
         <td>客栈名称</td>
         <td>客栈地址</td>
         <td>付款日期</td>
@@ -80,7 +80,7 @@
 <h2>本客栈房间的入住记录</h2>
 <table border="2">
     <tr>
-        <td>会员编号</td>
+        <td>会员编号(0为贵宾入住)</td>
         <td>客栈名称</td>
         <td>客栈地址</td>
         <td>客栈编号</td>
@@ -90,7 +90,7 @@
     </tr>
     <c:forEach items="${checkInbillVO}" var="ciitem">
         <tr>
-            <td>${citem.vipId}</td>
+            <td>${ciitem.vipId}</td>
             <td>${ciitem.hostelName}</td>
             <td>${ciitem.hostelAddress}</td>
             <td>${ciitem.hostelId}</td>
@@ -104,7 +104,7 @@
 <h2>本客栈房间的退房记录</h2>
 <table border="2">
     <tr>
-        <td>会员编号</td>
+        <td>会员编号(0为贵宾退房)</td>
         <td>客栈名称</td>
         <td>客栈地址</td>
         <td>客栈编号</td>

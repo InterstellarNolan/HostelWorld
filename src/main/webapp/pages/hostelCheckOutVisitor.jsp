@@ -18,41 +18,39 @@
             <li><a href="<%=request.getContextPath()%>/hostel/home">基本信息</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/request">开店申请</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/edit">修改申请</a></li>
-            <li><a href="#">所有房间</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/edit">所有房间</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/addroom">新增房间</a></li>
 
             <li><a href="<%=request.getContextPath()%>/hostel/analysis">统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房</a></li>
+            <li><a href="#">旅客退房</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/pay">旅客结账</a></li>
             <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
         </ul>
     </nav>
 </div>
 <div>
-    <form action="<%=request.getContextPath()%>/hostel/room/${room.id}" method="post">
+    <a href="<%=request.getContextPath()%>/hostel/checkOutMember">会员退房</a>
+    <a href="<%=request.getContextPath()%>/hostel/checkOutVisitor">贵宾退房</a>
+    <form action="<%=request.getContextPath()%>/hostel/checkOutVisitor" method="post">
         <table border="2">
             <tr>
                 <td>房间编号</td>
-                <td><input type="text" readonly="readonly" value="${room.id}"></td>
+                <td><input type="text" name="roomId" placeholder="房间"></td>
             </tr>
             <tr>
-                <td>房间类型</td>
-                <td><input type="text" name="name" value="${room.name}"></td>
+                <td>真实姓名</td>
+                <td><input type="text" name="realName" placeholder="真实姓名"></td>
             </tr>
             <tr>
-                <td>房间价格</td>
-                <td><input type="text" name="price" value="${room.price}"></td>
+                <td>身份证号</td>
+                <td><input type="text" name="idCard" placeholder="身份证"></td>
             </tr>
-
         </table>
-        <input type="submit" value="更改房间">
+        <input type="submit" value="退房">
     </form>
 
-    <div id="message">${message}</div>
-    <a href="<%=request.getContextPath()%>/hostel/rooms">返回房间列表</a>
-    <a href="<%=request.getContextPath()%>/hostel/roomActive/${room.id}">启用房间</a>
-    <div>注意，请不要启用有客人入住的房间，具体住宿情况请在统计信息里查询</div>
 </div>
+<div id="message">${message}</div>
 </body>
 </html>

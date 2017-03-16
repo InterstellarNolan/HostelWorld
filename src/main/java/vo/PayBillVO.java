@@ -36,7 +36,11 @@ public class PayBillVO {
         this.hostelId = payBillEntity.getHostel().getUserid();
         this.hostelAddress = payBillEntity.getHostel().getAddress();
         this.hostelName = payBillEntity.getHostel().getName();
-        this.vipId = payBillEntity.getMember().getUserid();
+        if (payBillEntity.getMember() == null) {
+            this.vipId = 0;
+        } else {
+            this.vipId = payBillEntity.getMember().getUserid();
+        }
         this.roomId = payBillEntity.getRoom().getId();
         this.roomImg = payBillEntity.getRoom().getImg();
         this.roomName = payBillEntity.getRoom().getName();

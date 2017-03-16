@@ -36,7 +36,11 @@ public class LiveBillVO {
         this.hostelId = liveBillEntity.getHostel().getUserid();
         this.hostelAddress = liveBillEntity.getHostel().getAddress();
         this.hostelName = liveBillEntity.getHostel().getName();
-        this.vipId = liveBillEntity.getMember().getUserid();
+        if (liveBillEntity.getMember() == null) {
+            this.vipId = 0;
+        } else {
+            this.vipId = liveBillEntity.getMember().getUserid();
+        }
         this.roomId = liveBillEntity.getRoom().getId();
         this.roomImg = liveBillEntity.getRoom().getImg();
         this.roomName = liveBillEntity.getRoom().getName();

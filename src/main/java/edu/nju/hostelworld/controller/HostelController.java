@@ -290,4 +290,66 @@ public class HostelController {
         model.addAttribute("checkOutbillVO", checkOutbillVO);
         return new ModelAndView("hostelAnalysis");
     }
+
+    @RequestMapping(value = "/checkIn")
+    public ModelAndView checkInPage() {
+        return new ModelAndView("hostelCheckIn");
+    }
+
+    @RequestMapping(value = "/checkInMember", method = RequestMethod.GET)
+    public ModelAndView checkInMemberPage() {
+        return new ModelAndView("hostelCheckInMember");
+    }
+
+    @RequestMapping(value = "/checkInMember", method = RequestMethod.POST)
+    public ModelAndView checkInMember(Model model, HttpServletRequest request, String realName, String idCard, String roomId, String memberId) {
+        CheckInVO vo = new CheckInVO(realName, idCard, Integer.parseInt(memberId) - 1000000, Integer.parseInt(roomId));
+        ResultMessage rmsg = hostelService.liveIn(vo);
+        model.addAttribute("message", rmsg.toShow());
+        return new ModelAndView("hostelCheckInMember");
+    }
+
+    @RequestMapping(value = "/checkInVisitor", method = RequestMethod.GET)
+    public ModelAndView checkInVisitorPage() {
+        return new ModelAndView("hostelCheckInVisitor");
+    }
+
+    @RequestMapping(value = "/checkInVisitor", method = RequestMethod.POST)
+    public ModelAndView checkInVistor(Model model, HttpServletRequest request, String realName, String idCard, String roomId) {
+        CheckInVO vo = new CheckInVO(realName, idCard, 0, Integer.parseInt(roomId));
+        ResultMessage rmsg = hostelService.liveIn(vo);
+        model.addAttribute("message", rmsg.toShow());
+        return new ModelAndView("hostelCheckInVisitor");
+    }
+
+    @RequestMapping(value = "/checkOut")
+    public ModelAndView checkOutPage() {
+        return new ModelAndView("hostelCheckOut");
+    }
+
+    @RequestMapping(value = "/checkOutMember", method = RequestMethod.GET)
+    public ModelAndView checkOutMemberPage() {
+        return new ModelAndView("hostelCheckOutMember");
+    }
+
+    @RequestMapping(value = "/checkOutVisitor", method = RequestMethod.GET)
+    public ModelAndView checkOutVisitorPage() {
+        return new ModelAndView("hostelCheckOutVisitor");
+    }
+
+    @RequestMapping(value = "/checkOutMember", method = RequestMethod.POST)
+    public ModelAndView checkOutMember(Model model, HttpServletRequest request, String realName, String idCard, String roomId, String memberId) {
+        CheckOutVO vo = new CheckOutVO(realName, idCard, Integer.parseInt(memberId) - 1000000, Integer.parseInt(roomId));
+        ResultMessage rmsg = hostelService.depart(vo);
+        model.addAttribute("message", rmsg.toShow());
+        return new ModelAndView("hostelCheckOutMember");
+    }
+
+    @RequestMapping(value = "/checkOutVisitor", method = RequestMethod.POST)
+    public ModelAndView checkOutVistor(Model model, HttpServletRequest request, String realName, String idCard, String roomId) {
+        CheckOutVO vo = new CheckOutVO(realName, idCard, 0, Integer.parseInt(roomId));
+        ResultMessage rmsg = hostelService.depart(vo);
+        model.addAttribute("message", rmsg.toShow());
+        return new ModelAndView("hostelCheckOutVisitor");
+    }
 }
