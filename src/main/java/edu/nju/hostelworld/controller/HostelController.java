@@ -195,13 +195,20 @@ public class HostelController {
         Hostel hostel = hostelService.getById(user.getUserid());
 
         List<RequestOpen> listOpen = managerService.getOpenRequests();
-        for (int i = listOpen.size() - 1; i >= 0; i--) {
-            RequestOpen open = listOpen.get(i);
-            if (open.getHostel().getId() == hostel.getId()) {
-                model.addAttribute("state", open.getState());
-                break;
-            }
+        System.out.println("list size" + listOpen.size());
+        if (listOpen.size() == 0) {
             model.addAttribute("state", "未提交开业申请");
+        } else {
+            for (int i = listOpen.size() - 1; i >= 0; i--) {
+                RequestOpen open = listOpen.get(i);
+                if (open.getHostel().getId() == hostel.getId()) {
+                    System.out.println(open.getHostel().getId() + "equals");
+                    System.out.println(hostel.getId());
+                    System.out.println(open.getId());
+                    model.addAttribute("state", open.getState());
+                    break;
+                }
+            }
         }
         model.addAttribute("hostel", hostel);
         model.addAttribute("user", user);
@@ -226,6 +233,18 @@ public class HostelController {
         model.addAttribute("message", rmsg.toShow());
         model.addAttribute("hostel", hostel);
         model.addAttribute("user", user);
+        model.addAttribute("roomNum", hostelService.getAllRooms(hostel.getId()).size());
+        model.addAttribute("validroomNum", hostelService.getAllValidRooms(hostel.getId()).size());
+        for (int i = listOpen.size() - 1; i >= 0; i--) {
+            RequestOpen open = listOpen.get(i);
+            if (open.getHostel().getId() == hostel.getId()) {
+                //System.out.println(open.getHostel().getId() + "equals");
+                //System.out.println(hostel.getId());
+                //System.out.println(open.getId());
+                model.addAttribute("state", open.getState());
+                break;
+            }
+        }
         return new ModelAndView("hostelOpenRequest");
     }
 

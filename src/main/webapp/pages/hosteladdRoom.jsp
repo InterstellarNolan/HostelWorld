@@ -21,7 +21,8 @@
             <li><a href="#">新增房间</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/analysis">统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房结账</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/pay">旅客结账</a></li>
             <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
         </ul>
     </nav>
