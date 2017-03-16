@@ -24,6 +24,7 @@
     </nav>
 </div>
 <div>
+    <a href="/member/stop">停止会员卡资格</a>
     <form action="<%=request.getContextPath()%>/member/edit" method="post">
         <table border="2">
             <tr>
@@ -57,6 +58,7 @@
         </table>
         <input type="submit" value="更改">
     </form>
+
     <div id="message1">${message1}</div>
     <div id="message2">${message2}</div>
 </div>

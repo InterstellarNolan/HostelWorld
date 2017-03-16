@@ -275,7 +275,7 @@ public class HostelServiceBean implements HostelService {
     @Override
     public List<Hostel> getAllPermittedHostels() {
 
-        System.out.println("HERE TO SERVICE GET");
+        //System.out.println("HERE TO SERVICE GET");
         return hostelDao.getByRestrictEqual("permitted", true);
     }
 

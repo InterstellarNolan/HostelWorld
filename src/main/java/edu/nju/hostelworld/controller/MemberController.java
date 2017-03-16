@@ -177,4 +177,16 @@ public class MemberController {
         memberService.unbook(member.getId(), Integer.parseInt(id));
         return new ModelAndView("redirect:/member/unbook");
     }
+
+    @RequestMapping(value="/stop")
+    public ModelAndView stop(ModelMap model,HttpServletRequest request){
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Member member = memberService.getById(user.getUserid());
+        ResultMessage rmsg=memberService.stop(member.getId());
+        if(rmsg.equals(ResultMessage.VIP_STATE_STOP)){
+            return new ModelAndView("error/aleardStop");
+        }
+        return new ModelAndView("common/memberStop");
+    }
 }

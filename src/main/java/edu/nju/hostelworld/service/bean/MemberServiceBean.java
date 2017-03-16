@@ -34,6 +34,7 @@ public class MemberServiceBean implements MemberService {
     public void init(int memberId) {
 
         Member vip = getById(memberId);
+        System.out.println(vip.getState());
         MemberState vipState = MemberState.strToMemberState(vip.getState());
         if (vipState == MemberState.UNACTIVATED || vipState == MemberState.STOP) {
             //未激活or停卡 不涉及根据时间改变状态
@@ -120,7 +121,14 @@ public class MemberServiceBean implements MemberService {
     @Override
     public ResultMessage stop(int memberId) {
         Member vip = vipDao.load(memberId);
+        System.out.println();
+        System.out.println();
+        System.out.println(vip.getState());
+        if(vip.getState().equals("STOP")){
+            return ResultMessage.VIP_STATE_STOP;
+        }
         vip.setState(MemberState.STOP.toString());
+
         return vipDao.update(vip);
     }
 

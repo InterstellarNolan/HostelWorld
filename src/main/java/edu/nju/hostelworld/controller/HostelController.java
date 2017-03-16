@@ -34,4 +34,9 @@ public class HostelController {
         model.addAttribute("roomnumber", hostelService.getAllRooms(hostel.getId()).size());
         return new ModelAndView("hostelHome");
     }
+
+    @RequestMapping(value = "/rooms")
+    public ModelAndView roomsPage(Model model, HttpServletRequest request) {
+        return new ModelAndView("hostelRooms");
+    }
 }

@@ -53,6 +53,7 @@ public class LoginController {
         String name = userVO.getUserName();
         String password = userVO.getPassword();
         ResultMessage msg = userService.checkPassword(name, password);
+        //System.out.println(name+" "+password);
         if (msg != ResultMessage.SUCCESS) {
             return new ModelAndView("/loginFail");
         } else {//验证通过
@@ -60,7 +61,7 @@ public class LoginController {
             OnLineUserVO onLineUserVO = new OnLineUserVO(user.getId(), user.getUserName(), user.getType());
             session.setAttribute("userVO", onLineUserVO);
             if (user.getType().equals("member")) {
-                vipService.init(user.getId());
+                vipService.init(user.getUserid());
             }
             return roleToHomePage(session, onLineUserVO);
         }
@@ -69,6 +70,7 @@ public class LoginController {
     public ModelAndView roleToHomePage(HttpSession session, OnLineUserVO user) {
         User use = userService.getById(user.getId());
         int id = use.getUserid();
+        //System.out.println(id);
         switch (user.getType()) {
             case "member":
                 vipService.init(id);
