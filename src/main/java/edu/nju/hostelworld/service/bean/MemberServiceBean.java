@@ -1,9 +1,6 @@
 package edu.nju.hostelworld.service.bean;
 
-import edu.nju.hostelworld.DAO.BookBillDAO;
-import edu.nju.hostelworld.DAO.HostelDAO;
-import edu.nju.hostelworld.DAO.MemberDAO;
-import edu.nju.hostelworld.DAO.UserDAO;
+import edu.nju.hostelworld.DAO.*;
 import edu.nju.hostelworld.entity.*;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;
@@ -34,7 +31,7 @@ public class MemberServiceBean implements MemberService {
     public void init(int memberId) {
 
         Member vip = getById(memberId);
-        //System.out.println(vip.getState());
+        System.out.println(vip.getState());
         MemberState vipState = MemberState.strToMemberState(vip.getState());
         if (vipState == MemberState.UNACTIVATED || vipState == MemberState.STOP) {
             //未激活or停卡 不涉及根据时间改变状态
@@ -165,8 +162,10 @@ public class MemberServiceBean implements MemberService {
                 bookBill.setCreateDate(new Date().getTime());
                 bookBill.setCheckInDate(DateHandler.strToLong(bookVO.getCheckInDate()));
                 bookBill.setCheckOutDate(DateHandler.strToLong(bookVO.getCheckOutDate()));
+                room.setValid(false);
                 try {
                     bookBillDao.add(bookBill);
+                    hostelRoomDAO.update(room);
                     return ResultMessage.SUCCESS;
                 } catch (Exception e) {
                     return ResultMessage.FAILURE;
@@ -180,6 +179,7 @@ public class MemberServiceBean implements MemberService {
     @Override
     public ResultMessage unbook(int memberId, int bookId) {
         BookBill bookBill = bookBillDao.get(bookId);
+        HostelRoom room=bookBill.getRoom();
         long nowDate = new Date().getTime();
         if (bookBill.getMemberId() != memberId) {//只能取消预订自己的订单
             return ResultMessage.NO_AUTHORITY;
@@ -189,7 +189,9 @@ public class MemberServiceBean implements MemberService {
             //退钱
             payMoney(memberId, -MONEY_BOOK);
             //使该预订订单失效！~~~
+            room.setValid(true);
             bookBill.setValid(false);
+            hostelRoomDAO.update(room);
             return bookBillDao.update(bookBill);
         }
     }
@@ -230,8 +232,7 @@ public class MemberServiceBean implements MemberService {
 
     @Override
     public List<Hostel> getAllPermittedHostels() {
-        System.out.println();
-        System.out.println();
+
         System.out.println("HERE TO GET");
         return hostelDao.getByRestrictEqual("permitted", true);
     }
@@ -298,4 +299,6 @@ public class MemberServiceBean implements MemberService {
     UserService userService;
     @Autowired
     HostelService hostelService;
+    @Autowired
+    HostelRoomDAO hostelRoomDAO;
 }

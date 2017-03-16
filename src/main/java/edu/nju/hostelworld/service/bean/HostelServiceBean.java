@@ -262,6 +262,9 @@ public class HostelServiceBean implements HostelService {
     @Override
     public List<HostelRoom> getAllValidRooms(int hostelId) {
         Map map = new HashMap<String, Object>();
+        //System.out.println();
+        //System.out.println();
+        //System.out.println(hostelId);
         map.put("hostel.id", hostelId);
         map.put("valid", true);
         return roomDao.getByRestrictEqual(map);
@@ -278,7 +281,7 @@ public class HostelServiceBean implements HostelService {
         System.out.println();
         System.out.println("HERE TO GET");
         //System.out.println("HERE TO SERVICE GET");
-        return hostelDao.getByRestrictEqual("permitted", false);
+        return hostelDao.getByRestrictEqual("permitted", true);
     }
 
     @Override

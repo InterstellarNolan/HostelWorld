@@ -47,6 +47,6 @@
         </tr>
     </c:forEach>
 </table>
-
+<div id="message">${message}</div>
 </body>
 </html>

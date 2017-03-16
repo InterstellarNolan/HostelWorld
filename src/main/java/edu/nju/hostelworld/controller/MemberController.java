@@ -199,8 +199,9 @@ public class MemberController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
-        memberService.unbook(member.getId(), Integer.parseInt(id));
-        return new ModelAndView("redirect:/member/unbook");
+        ResultMessage rmsg=memberService.unbook(member.getId(), Integer.parseInt(id));
+        model.addAttribute("message",rmsg.toShow());
+        return new ModelAndView("memberUnbook");
     }
 
     @RequestMapping(value = "/room/{id}")
