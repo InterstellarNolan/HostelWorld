@@ -33,17 +33,17 @@
         <td>客栈地址</td>
 
     </tr>
-    <c:forEach items="${Openlist}" var="ciitem">
+    <c:forEach items="${Modify}" var="ciitem">
         <tr>
             <td>
-                <a href="<%=request.getContextPath()%>/HostelManager/requestOpenDetail/${ciitem.id}">${ciitem.hostel_lookid}</a>
+                <a href="<%=request.getContextPath()%>/HostelManager/requestModifyDetail/${ciitem.hostelid}">${ciitem.hostelLookId}</a>
             </td>
-            <td>${ciitem.hostel_name}</td>
-            <td>${ciitem.hostel_phone}</td>
-            <td>${ciitem.hostel_address}</td>
+            <td>${ciitem.name_original}</td>
+            <td>${ciitem.phone_original}</td>
+            <td>${ciitem.address_original}</td>
         </tr>
     </c:forEach>
 </table>
-<div id="message">${message}</div>
+
 </body>
 </html>

@@ -26,11 +26,11 @@
 
 <h2>开店申请</h2>
 <div>
-    <form action="<%=request.getContextPath()%>/HostelManager/requestOpen/${hostel.id}" method="post">
+    <form action="<%=request.getContextPath()%>/HostelManager/requestOpen/${Openlist.id}" method="post">
         <table border="2">
             <tr>
                 <td>客栈编号</td>
-                <td><input type="text" readonly="readonly" value="${hostel.userID}"></td>
+                <td><input type="text" readonly="readonly" value="${hostel.userid}"></td>
             </tr>
             <tr>
                 <td>客栈名称</td>

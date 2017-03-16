@@ -194,7 +194,7 @@ public class HostelController {
         User user = userService.getById(userVO.getId());
         Hostel hostel = hostelService.getById(user.getUserid());
 
-        List<RequestOpen> listOpen = managerService.getOpenRequests();
+        List<RequestOpen> listOpen = managerService.getAllOpenRequests();
         System.out.println("list size" + listOpen.size());
         if (listOpen.size() == 0) {
             model.addAttribute("state", "未提交开业申请");

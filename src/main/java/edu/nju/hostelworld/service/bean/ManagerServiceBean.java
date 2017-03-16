@@ -48,6 +48,7 @@ public class ManagerServiceBean implements ManagerService {
     public List<RequestOpen> getAllOpenRequests() {
         return requestDao.getAllOpenRequest();
     }
+
     @Override
     public List<RequestOpen> getOpenRequests() {
         return requestDao.getOpenRequestByRestrictEqual("state", RequestState.UNCHECK.toString());
@@ -56,6 +57,22 @@ public class ManagerServiceBean implements ManagerService {
     @Override
     public List<RequestModify> getModifyRequests() {
         return requestDao.getModifyRequestByRestrictEqual("state", RequestState.UNCHECK.toString());
+    }
+
+    @Override
+    public RequestModify getModify(int id) {
+        List<RequestModify> list = getModifyRequests();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (list.get(i).getHostelOriginal().getId() == id) return list.get(i);
+        }
+        return null;
+    }
+
+    @Override
+    public RequestOpen getOpen(int id) {
+        return requestDao.getOpenRequest(id);
+
+
     }
 
     @Override

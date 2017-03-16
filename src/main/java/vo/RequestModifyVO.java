@@ -13,6 +13,9 @@ import java.util.List;
 public class RequestModifyVO {
     private int id;
     private int hostelId;
+
+
+    private int hostelLookId;
     private String img_original;
     private String phone_original;
     private String address_original;
@@ -25,28 +28,30 @@ public class RequestModifyVO {
 
     private RequestState state;
 
-    public RequestModifyVO(RequestModify requestModify){
-        this.id=requestModify.getId();
-        this.hostelId=requestModify.getHostelOriginal().getId();
-        this.img_original=requestModify.getHostelOriginal().getImg();
-        this.phone_original=requestModify.getHostelOriginal().getPhone();
-        this.address_original=requestModify.getHostelOriginal().getAddress();
-        this.name_original=requestModify.getHostelOriginal().getName();
+    public RequestModifyVO(RequestModify requestModify) {
+        this.id = requestModify.getId();
+        this.hostelLookId = requestModify.getHostelOriginal().getUserid();
+        this.hostelId = requestModify.getHostelOriginal().getId();
+        this.img_original = requestModify.getHostelOriginal().getImg();
+        this.phone_original = requestModify.getHostelOriginal().getPhone();
+        this.address_original = requestModify.getHostelOriginal().getAddress();
+        this.name_original = requestModify.getHostelOriginal().getName();
 
-        this.img_new=requestModify.getNewImg();
-        this.phone_new=requestModify.getNewPhone();
-        this.address_new=requestModify.getNewAddress();
-        this.name_new=requestModify.getNewName();
-        this.state=RequestState.strToRequestState(requestModify.getState());
+        this.img_new = requestModify.getNewImg();
+        this.phone_new = requestModify.getNewPhone();
+        this.address_new = requestModify.getNewAddress();
+        this.name_new = requestModify.getNewName();
+        this.state = RequestState.strToRequestState(requestModify.getState());
     }
 
-    public static List<RequestModifyVO> entityToVO(List<RequestModify> requests){
-        List<RequestModifyVO> res=new ArrayList<RequestModifyVO>();
-        for(RequestModify request:requests){
+    public static List<RequestModifyVO> entityToVO(List<RequestModify> requests) {
+        List<RequestModifyVO> res = new ArrayList<RequestModifyVO>();
+        for (RequestModify request : requests) {
             res.add(new RequestModifyVO(request));
         }
         return res;
     }
+
     public int getId() {
         return id;
     }
@@ -89,5 +94,9 @@ public class RequestModifyVO {
 
     public RequestState getState() {
         return state;
+    }
+
+    public int getHostelLookId() {
+        return hostelLookId;
     }
 }

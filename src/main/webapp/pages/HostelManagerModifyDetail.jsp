@@ -24,26 +24,30 @@
     </nav>
 </div>
 
-<h2>HostelWorld的开店申请</h2>
-<table border="2">
-    <tr>
-        <td>客栈编号</td>
-        <td>客栈名称</td>
-        <td>客栈电话</td>
-        <td>客栈地址</td>
+<h2>开店申请</h2>
+<div>
+    <form action="<%=request.getContextPath()%>/HostelManager/requestModify/${hostel.id}" method="post">
+        <table border="2">
+            <tr>
+                <td>原客栈名称${request.name_original}</td>
+                <td>现客栈名称${request.name_new}</td>
+            </tr>
+            <tr>
+                <td>原客栈地址${request.address_original}</td>
+                <td>现客栈地址${request.address_new}</td>
+            </tr>
+            <tr>
+                <td>原客栈电话${request.phone_original}</td>
+                <td>现客栈电话${request.phone_new}</td>
+            </tr>
+            <tr>
+                <td>是否批准</td>
+                <td><input type="text" name="state" placeholder="请输入approved或denied"></td>
+            </tr>
+        </table>
+        <input type="submit" value="完成审批">
+    </form>
+</div>
 
-    </tr>
-    <c:forEach items="${Openlist}" var="ciitem">
-        <tr>
-            <td>
-                <a href="<%=request.getContextPath()%>/HostelManager/requestOpenDetail/${ciitem.id}">${ciitem.hostel_lookid}</a>
-            </td>
-            <td>${ciitem.hostel_name}</td>
-            <td>${ciitem.hostel_phone}</td>
-            <td>${ciitem.hostel_address}</td>
-        </tr>
-    </c:forEach>
-</table>
-<div id="message">${message}</div>
 </body>
 </html>

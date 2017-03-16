@@ -25,8 +25,8 @@ public class RequestOpenVO {
     private RequestState state;
 
     public RequestOpenVO(RequestOpen request) {
-        this.hostel_id = request.getId();
-        this.id = request.getHostel().getId();
+        this.hostel_id = request.getHostel().getId();
+        this.id = request.getId();
         this.hostel_lookid = request.getHostel().getUserid();
         this.hostel_img = request.getHostel().getImg();
         this.hostel_phone = request.getHostel().getPhone();

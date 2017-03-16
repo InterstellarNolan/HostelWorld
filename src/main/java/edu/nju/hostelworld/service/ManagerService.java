@@ -108,4 +108,12 @@ public interface ManagerService {
      * @return
      */
     public List<RequestOpen> getAllOpenRequests();
+
+    /**
+     * @param id
+     * @return
+     */
+    public RequestModify getModify(int id);
+
+    public RequestOpen getOpen(int id);
 }
