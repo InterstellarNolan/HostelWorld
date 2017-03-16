@@ -340,16 +340,33 @@ public class HostelController {
     @RequestMapping(value = "/checkOutMember", method = RequestMethod.POST)
     public ModelAndView checkOutMember(Model model, HttpServletRequest request, String realName, String idCard, String roomId, String memberId) {
         CheckOutVO vo = new CheckOutVO(realName, idCard, Integer.parseInt(memberId) - 1000000, Integer.parseInt(roomId));
+        HostelRoom room = hostelService.getRoomById(Integer.parseInt(roomId));
+        Double money = room.getPrice();
+        PayVO pvo = new PayVO(realName, idCard, money, Integer.parseInt(memberId) - 1000000, Integer.parseInt(roomId));
+
+        Double realmoney = hostelService.enrollPay(pvo);
+        ResultMessage rmsg0 = hostelService.vipPay(Integer.parseInt(memberId) - 1000000, realmoney);
         ResultMessage rmsg = hostelService.depart(vo);
+        // model.addAttribute("room", room);
         model.addAttribute("message", rmsg.toShow());
+        model.addAttribute("realmoney", realmoney.toString());
+        model.addAttribute("message0", rmsg0.toShow());
         return new ModelAndView("hostelCheckOutMember");
     }
 
     @RequestMapping(value = "/checkOutVisitor", method = RequestMethod.POST)
     public ModelAndView checkOutVistor(Model model, HttpServletRequest request, String realName, String idCard, String roomId) {
         CheckOutVO vo = new CheckOutVO(realName, idCard, 0, Integer.parseInt(roomId));
+        HostelRoom room = hostelService.getRoomById(Integer.parseInt(roomId));
+        Double money = room.getPrice();
+        PayVO pvo = new PayVO(realName, idCard, money, 0, Integer.parseInt(roomId));
+        Double realmoney = hostelService.enrollPay(pvo);
+        ResultMessage rmsg0 = hostelService.unVipPay(realmoney);
         ResultMessage rmsg = hostelService.depart(vo);
         model.addAttribute("message", rmsg.toShow());
+        model.addAttribute("message0", rmsg0.toShow());
+        model.addAttribute("realmoney", realmoney.toString());
         return new ModelAndView("hostelCheckOutVisitor");
     }
+
 }

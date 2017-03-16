@@ -51,6 +51,8 @@
     </form>
 
 </div>
-<div id="message">${message}</div>
+<div id="realmoney">实付金额：${realmoney}</div>
+<div id="message0">付款${message0}</div>
+<div id="message">退房${message}</div>
 </body>
 </html>

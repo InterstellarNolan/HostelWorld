@@ -26,6 +26,20 @@ import static edu.nju.hostelworld.util.Constants.*;
 public class MemberServiceBean implements MemberService {
     @Autowired
     MemberService memberService;
+    @Autowired
+    MemberDAO vipDao;
+    @Autowired
+    HostelDAO hostelDao;
+    @Autowired
+    UserDAO userDao;
+    @Autowired
+    BookBillDAO bookBillDao;
+    @Autowired
+    UserService userService;
+    @Autowired
+    HostelService hostelService;
+    @Autowired
+    HostelRoomDAO hostelRoomDAO;
 
     @Override
     public void init(int memberId) {
@@ -113,7 +127,6 @@ public class MemberServiceBean implements MemberService {
             return ResultMessage.FAILURE;
         }
     }
-
 
     @Override
     public ResultMessage stop(int memberId) {
@@ -281,24 +294,9 @@ public class MemberServiceBean implements MemberService {
             return ResultMessage.NOT_ENOUGH_MONEY;
         } else {
             vip.setMoneyLeft(moneyLeft - money);
-            vip.setMoneyPaid(vip.getMoneyPaid() + money);
+            //vip.setMoneyPaid(vip.getMoneyPaid() + money);
             return vipDao.update(vip);
         }
 
     }
-
-    @Autowired
-    MemberDAO vipDao;
-    @Autowired
-    HostelDAO hostelDao;
-    @Autowired
-    UserDAO userDao;
-    @Autowired
-    BookBillDAO bookBillDao;
-    @Autowired
-    UserService userService;
-    @Autowired
-    HostelService hostelService;
-    @Autowired
-    HostelRoomDAO hostelRoomDAO;
 }

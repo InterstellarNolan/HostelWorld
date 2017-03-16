@@ -5,13 +5,16 @@ package vo;
  */
 public class RoomVO_input {
     private double price=299;
-    private String img="/../img/hostel002.jpg";
+    private String img = "无";
     private String name;
 
     public RoomVO_input(double price, String img, String name) {
         this.price = price;
         this.img = img;
         this.name = name;
+    }
+
+    public RoomVO_input() {
     }
 
     public double getPrice() {
@@ -37,6 +40,4 @@ public class RoomVO_input {
     public void setName(String name) {
         this.name = name;
     }
-
-    public RoomVO_input(){}
 }

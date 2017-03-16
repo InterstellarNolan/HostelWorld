@@ -50,11 +50,18 @@
                 <td>会员号码</td>
                 <td><input type="text" name="memberId" placeholder="7位数字"></td>
             </tr>
+            <tr>
+                <td>房价</td>
+                <td>请在入住时记好房价，谨防不法分子诈骗</td>
+            </tr>
         </table>
         <input type="submit" value="退房">
     </form>
 
 </div>
-<div id="message">${message}</div>
+<div id="realmoney">实付金额：${realmoney}</div>
+<div id="message0">付款${message0}</div>
+<div id="message">退房${message}</div>
+
 </body>
 </html>

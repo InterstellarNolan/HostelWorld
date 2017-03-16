@@ -52,6 +52,7 @@
         </tr>
     </table>
     <input type="submit" value="充值">
+    <div id="message1">100积分兑换1元</div>
     <div id="message">${message}</div>
 </form>
 </body>
