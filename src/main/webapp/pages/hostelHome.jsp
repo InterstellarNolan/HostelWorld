@@ -14,9 +14,11 @@
 <div>
     <nav>
         <ul>
-            <li><a href="#">基本信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/rooms">所有房间</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/home">基本信息</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/request">开店申请</a></li>
+            <li><a href="#">所有房间</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/addroom">新增房间</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/release">发布计划</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/analysis">统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/edit">修改资料</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
@@ -29,6 +31,10 @@
         <tr>
             <td>客栈编号</td>
             <td>${hostel.userid}</td>
+        </tr>
+        <tr>
+            <td>客栈状态</td>
+            <td>${hostelstate}</td>
         </tr>
         <tr>
             <td>客栈名称</td>

@@ -230,7 +230,7 @@ public class MemberServiceBean implements MemberService {
 
     @Override
     public List<Hostel> getAllPermittedHostels() {
-        return hostelDao.getByRestrictEqual("permitted", true);
+        return hostelDao.getByRestrictEqual("permitted", false);
     }
 
     /**

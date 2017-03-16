@@ -1,12 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2017/3/15
-  Time: 13:56
+  Date: 2017/3/16
+  Time: 12:40
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <title>Hostel World</title>
@@ -24,26 +23,28 @@
         </ul>
     </nav>
 </div>
-
-<table border="2">
-    <tr>
-        <td>客栈编号</td>
-        <td>客栈名称</td>
-        <td>客栈地址</td>
-        <td>联系电话</td>
-        <td>房间数量</td>
-
-    </tr>
-    <c:forEach items="${hostellist}" var="item">
-        <tr>
-            <td><a href="<%=request.getContextPath()%>/hostel/home/${item.id}">${item.userID}</a></td>
-            <td>${item.name}</td>
-            <td>${item.address}</td>
-            <td>${item.phone}</td>
-            <td>${item.roomnumber}</td>
-        </tr>
-    </c:forEach>
-</table>
-<div id="message">${message}</div>
+<div>
+    <form action="<%=request.getContextPath()%>/member/book">
+        <table border="2">
+            <tr>
+                <td>会员编号</td>
+                <td><input type="text" name="memberid" value="${member.userid}"></td>
+            </tr>
+            <tr>
+                <td>房间编号</td>
+                <td><input type="text" name="roomid" value="${room.id}"></td>
+            </tr>
+            <tr>
+                <td>入住日期</td>
+                <td><input type="date" name="indate"></td>
+            </tr>
+            <tr>
+                <td>退房日期</td>
+                <td><input type="date" name="outdate"></td>
+            </tr>
+        </table>
+        <input type="submit" value="更改">
+    </form>
+</div>
 </body>
 </html>

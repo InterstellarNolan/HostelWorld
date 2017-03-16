@@ -1,13 +1,11 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.entity.BookBill;
-import edu.nju.hostelworld.entity.Hostel;
-import edu.nju.hostelworld.entity.Member;
-import edu.nju.hostelworld.entity.User;
+import edu.nju.hostelworld.entity.*;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.service.UserService;
 import edu.nju.hostelworld.util.Constants;
+import edu.nju.hostelworld.util.MemberState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,9 +51,14 @@ public class MemberController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
-        //System.out.println(member.getRealName());
-        model.addAttribute("member", member);
-        return new ModelAndView("memberCharge");
+        if (member.getState().equals(MemberState.STOP.toString())) {
+            //System.out.println(member.getRealName());
+            return new ModelAndView("/error/memberStop");
+        } else {
+            model.addAttribute("member", member);
+            return new ModelAndView("memberCharge");
+        }
+
     }
 
     @RequestMapping(value = "/charge", method = RequestMethod.POST)
@@ -141,15 +144,27 @@ public class MemberController {
 
     @RequestMapping(value = "/hostels")
     public ModelAndView hostelsList(Model model, HttpServletRequest request) {
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Member member = memberService.getById(user.getUserid());
         List<Hostel> list = hostelService.getAllPermittedHostels();
         List<HostelVO> list1 = HostelVO.entityToVO(list);
+        System.out.println(list.size());
         for (int i = 0; i < list1.size(); i++) {
             System.out.println(list1.get(i).getId());
+         }
+        if (member.getState().equals(MemberState.STOP.toString())) {
+            //System.out.println(member.getRealName());
+            return new ModelAndView("/error/memberStop");
+        } else if (member.getState().equals(MemberState.PAUSED.toString())) {
+            return new ModelAndView("/error/memberPaused");
+        } else if (member.getState().equals(MemberState.UNACTIVATED.toString())) {
+            return new ModelAndView("/error/memberUnactivated");
+        } else {
+            model.addAttribute("hostellist", list1);
+            model.addAttribute("userVO", userVO);
+            return new ModelAndView("memberHostels");
         }
-        model.addAttribute("hostellist", list1);
-        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
-        model.addAttribute("userVO", userVO);
-        return new ModelAndView("memberHostels");
     }
 
     @RequestMapping(value = "/unbook")
@@ -165,8 +180,16 @@ public class MemberController {
                 truelist.add(temp);
             }
         }
-        model.addAttribute("truelist", truelist);
-        return new ModelAndView("memberUnbook");
+        if (member.getState().equals(MemberState.STOP.toString())) {
+            return new ModelAndView("/error/memberStop");
+        } else if (member.getState().equals(MemberState.PAUSED.toString())) {
+            return new ModelAndView("/error/memberPaused");
+        } else if (member.getState().equals(MemberState.UNACTIVATED.toString())) {
+            return new ModelAndView("/error/memberUnactivated");
+        } else {
+            model.addAttribute("truelist", truelist);
+            return new ModelAndView("memberUnbook");
+        }
     }
 
     @RequestMapping(value = "/unbook/{id}")
@@ -178,13 +201,35 @@ public class MemberController {
         return new ModelAndView("redirect:/member/unbook");
     }
 
-    @RequestMapping(value="/stop")
-    public ModelAndView stop(ModelMap model,HttpServletRequest request){
+    @RequestMapping(value = "/room/{id}")
+    public ModelAndView room(Model model, @PathVariable("id") String id, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
-        ResultMessage rmsg=memberService.stop(member.getId());
-        if(rmsg.equals(ResultMessage.VIP_STATE_STOP)){
+        model.addAttribute("member", member);
+        HostelRoom room = hostelService.getRoomById(Integer.parseInt(id));
+        model.addAttribute("room", room);
+        return new ModelAndView("roomHome");
+    }
+
+    @RequestMapping(value = "/book")
+    public ModelAndView book(Model model, String memberid, String roomid, String indate, String outdate, HttpServletRequest request) {
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Member member = memberService.getById(user.getUserid());
+        BookVO bookVO = new BookVO(indate, outdate, member.getId(), Integer.parseInt(roomid));
+        ResultMessage rmsg=memberService.book(bookVO);
+        model.addAttribute("message",rmsg.toShow());
+        return new ModelAndView("redirect:/member/hostels");
+    }
+
+    @RequestMapping(value = "/stop")
+    public ModelAndView stop(ModelMap model, HttpServletRequest request) {
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Member member = memberService.getById(user.getUserid());
+        ResultMessage rmsg = memberService.stop(member.getId());
+        if (rmsg.equals(ResultMessage.VIP_STATE_STOP)) {
             return new ModelAndView("error/aleardStop");
         }
         return new ModelAndView("common/memberStop");
