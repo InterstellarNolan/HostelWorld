@@ -78,17 +78,17 @@ public class HostelController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Hostel hostel = hostelService.getById(user.getUserid());
-        List<HostelRoom> rooms=hostelService.getAllValidRooms(hostel.getId());
-        List<HostelRoom> allrooms=hostelService.getAllRooms(hostel.getId());
-        List<HostelRoom> allInvalidrooms=new ArrayList<HostelRoom>();
-        for(int i=0;i<allrooms.size();i++){
-            HostelRoom room=allrooms.get(i);
-            if(!room.getValid()){
+        List<HostelRoom> rooms = hostelService.getAllValidRooms(hostel.getId());
+        List<HostelRoom> allrooms = hostelService.getAllRooms(hostel.getId());
+        List<HostelRoom> allInvalidrooms = new ArrayList<HostelRoom>();
+        for (int i = 0; i < allrooms.size(); i++) {
+            HostelRoom room = allrooms.get(i);
+            if (!room.getValid()) {
                 allInvalidrooms.add(room);
             }
         }
         List<HostelRoomVO> roomlist = HostelRoomVO.entityToVO(rooms);
-        List<HostelRoomVO> Invalidroomlist=HostelRoomVO.entityToVO(allInvalidrooms);
+        List<HostelRoomVO> Invalidroomlist = HostelRoomVO.entityToVO(allInvalidrooms);
         model.addAttribute("roomList", roomlist);
         model.addAttribute("InvalidroomList", Invalidroomlist);
         return new ModelAndView("hostelRooms");
@@ -106,17 +106,20 @@ public class HostelController {
         User user = userService.getById(userVO.getId());
         Hostel hostel = hostelService.getById(user.getUserid());
         HostelRoomVO vo = new HostelRoomVO(Double.parseDouble(roomPrice), img, roomName, Integer.parseInt(roomPrice));
-        ResultMessage rmsg=hostelService.addRoom(hostel.getId(),vo );
-        model.addAttribute("message",rmsg.toShow());
+        ResultMessage rmsg = hostelService.addRoom(hostel.getId(), vo);
+        model.addAttribute("message", rmsg.toShow());
         return new ModelAndView("hosteladdRoom");
     }
-    @RequestMapping(value="/room/{id}")
-    public ModelAndView room(Model model, @PathVariable("id") String id, HttpServletRequest request){
+
+    @RequestMapping(value = "/room/{id}")
+    public ModelAndView room(Model model, @PathVariable("id") String id, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
-        Hostel hostel = hostelService.getById(user.getUserid());
-        hostelService.getAllLiveBills(hostel.getId());
-        hostelService.getAllBookBills(hostel.getId());
+
+        HostelRoom room = hostelService.getRoomById(Integer.parseInt(id));
+        Hostel hostel = room.getHostel();
+        model.addAttribute("room", room);
+        model.addAttribute("hostel", hostel);
         return new ModelAndView("hostelroomHome");
     }
 }

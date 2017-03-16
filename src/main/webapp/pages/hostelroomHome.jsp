@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Hostel World</title>
@@ -30,23 +30,23 @@
 <div>
     <table border="2">
         <tr>
-            <td>会员编号</td>
-            <td>会员名称</td>
-            <td>房间状态</td>
-            <td>预定日期</td>
-            <td>入住日期</td>
-            <td>退房日期</td>
             <td>房间编号</td>
             <td>房间类型</td>
-            <td>房间价格</td>
+            <td>房间定价</td>
+            <td>客栈编号</td>
+            <td>客栈名称</td>
+
+
         </tr>
-        <c:forEach items="${InvalidroomList}" var="iitem">
-            <tr>
-                <td><a href="<%=request.getContextPath()%>/hostel/room/${iitem.roomId}">${iitem.roomId}</a></td>
-                <td>${iitem.name}</td>
-                <td>${iitem.price}</td>
-            </tr>
-        </c:forEach>
+
+        <tr>
+            <td>${room.id}</td>
+            <td>${room.name}</td>
+            <td>${room.price}</td>
+            <td>${hostel.id}</td>
+            <td>${hostel.name}</td>
+        </tr>
+
     </table>
 </div>
 </body>
