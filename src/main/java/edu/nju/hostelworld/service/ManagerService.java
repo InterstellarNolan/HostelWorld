@@ -35,19 +35,18 @@ public interface ManagerService {
 
     /**
      * 总经理审批收到的开店申请
-     *
-     * @param requestOpen
-     * @return FAILURE, SUCCESS
+     * @param requestId
+     * @param requestState
+     * @return FAILURE,SUCCESS
      */
-    public ResultMessage updateOpenRequest(RequestOpen requestOpen);
-
+    public ResultMessage updateOpenRequest(int requestId,String requestState);
     /**
      * 总经理审批收到的店信息更改申请
-     *
-     * @param requestModify
-     * @return FAILURE, SUCCESS
+     * @param requestId
+     * @param requestState
+     * @return FAILURE,SUCCESS
      */
-    public ResultMessage updateModifyRequest(RequestModify requestModify);
+    public ResultMessage updateModifyRequest(int requestId,String requestState);
 
     /**
      * 总经理结算

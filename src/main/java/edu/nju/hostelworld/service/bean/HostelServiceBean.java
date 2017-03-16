@@ -75,11 +75,9 @@ public class HostelServiceBean implements HostelService {
         System.out.print(id+" "+name+" "+address+" "+phone);
         //TODO 待测试
         RequestModify requestModify=new RequestModify();
-        Hostel hostel1=hostelDao.get(id);
-        hostel1.setName(name);
-        hostel1.setAddress(address);
-        hostel1.setPhone(phone);
-        requestModify.setHostelNew(hostel1);
+        requestModify.setNewAddress(address);
+        requestModify.setNewName(name);
+        requestModify.setNewPhone(phone);
         requestModify.setHostelOriginal(hostelDao.get(id));
         try {
 

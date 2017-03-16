@@ -11,7 +11,7 @@
     <title>Hostel World</title>
 </head>
 <body>
-<div id="message">已提交申请，请等待经理审核</div>
+<div id="message">申请已等待经理审核，无需重复提交</div>
 <a href="/hostel/request/">返回</a>
 </body>
 </html>

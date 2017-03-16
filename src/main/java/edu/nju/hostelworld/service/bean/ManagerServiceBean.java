@@ -35,39 +35,48 @@ public class ManagerServiceBean implements ManagerService {
     }
 
     @Override
-    public ResultMessage updateOpenRequest(RequestOpen request) {
-        RequestState requestState = RequestState.strToRequestState(request.getState());
-        if (requestState == RequestState.DENIED) {//拒绝申请
+    public ResultMessage updateOpenRequest(int requestId,String requestState){
+        RequestState state=RequestState.strToRequestState(requestState);
+        RequestOpen request=requestDao.getOpenRequest(requestId);
+        request.setState(requestState);
+        if(state==RequestState.DENIED){//拒绝申请
             return requestDao.updateOpenRequest(request);
-        } else if (requestState == RequestState.APPROVED) {//同意申请
-            Hostel hostel = request.getHostel();
+        }else if(state==RequestState.APPROVED){//同意申请
+            Hostel hostel=request.getHostel();
             hostel.setPermitted(true);
-            ResultMessage msg1 = hostelDao.update(hostel);
-            ResultMessage msg2 = requestDao.updateOpenRequest(request);
-            if (msg1 == ResultMessage.SUCCESS && msg2 == ResultMessage.SUCCESS) {
+            ResultMessage msg1=hostelDao.update(hostel);
+            ResultMessage msg2=requestDao.updateOpenRequest(request);
+            if(msg1==ResultMessage.SUCCESS&&msg2==ResultMessage.SUCCESS){
                 return ResultMessage.SUCCESS;
-            } else {
+            }else {
                 return ResultMessage.FAILURE;
             }
-        } else {//没审核。。。
+        }else {//没审核。。。
             return ResultMessage.SUCCESS;
         }
     }
 
     @Override
-    public ResultMessage updateModifyRequest(RequestModify request) {
-        RequestState requestState = RequestState.strToRequestState(request.getState());
-        if (requestState == RequestState.DENIED) {//拒绝修改请求
+    public ResultMessage updateModifyRequest(int requestId,String requestState){
+        System.out.print("in service ---modifyRequest id="+requestId+"  "+requestState);
+        RequestState state=RequestState.strToRequestState(requestState);
+        RequestModify request=requestDao.getModifyRequest(requestId);
+        request.setState(requestState);
+        if(state==RequestState.DENIED){//拒绝修改请求
             return requestDao.updateModifyRequest(request);
-        } else if (requestState == RequestState.APPROVED) {//同意修改请求
-            ResultMessage msg1 = hostelDao.update(request.getHostelNew());
-            ResultMessage msg2 = requestDao.updateModifyRequest(request);
-            if (msg1 == ResultMessage.SUCCESS && msg2 == ResultMessage.SUCCESS) {
+        }else if(state==RequestState.APPROVED){//同意修改请求
+            Hostel hostel=request.getHostelOriginal();
+            hostel.setAddress(request.getNewAddress());
+            hostel.setPhone(request.getNewPhone());
+            hostel.setName(request.getNewName());
+            ResultMessage msg1=hostelDao.update(hostel);
+            ResultMessage msg2=requestDao.updateModifyRequest(request);
+            if(msg1==ResultMessage.SUCCESS&&msg2==ResultMessage.SUCCESS){
                 return ResultMessage.SUCCESS;
-            } else {
+            }else {
                 return ResultMessage.FAILURE;
             }
-        } else {//没审核。。。
+        }else {//没审核。。。
             return ResultMessage.SUCCESS;
         }
     }

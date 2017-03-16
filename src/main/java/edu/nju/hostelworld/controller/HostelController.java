@@ -201,7 +201,7 @@ public class HostelController {
                 model.addAttribute("state", open.getState());
                 break;
             }
-            model.addAttribute("stats", "未提交开业申请");
+            model.addAttribute("state", "未提交开业申请");
         }
         model.addAttribute("hostel", hostel);
         model.addAttribute("user", user);
