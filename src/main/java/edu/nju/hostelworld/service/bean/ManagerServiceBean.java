@@ -10,7 +10,10 @@ import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vo.IncomeVO;
+import vo.LiveInNumVO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +22,23 @@ import java.util.List;
 @Transactional
 @Service
 public class ManagerServiceBean implements ManagerService {
+    @Autowired
+    private HostelDAO hostelDao;
+    @Autowired
+    private PayBillDAO payBillDao;
+    @Autowired
+    private MemberDAO vipDao;
+    @Autowired
+    private UserDAO userDao;
+    @Autowired
+    private RequestDAO requestDao;
+    @Autowired
+    private HostelService hostelService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ManagerDAO managerDAO;
+
     @Override
     public ResultMessage init(int managerId) {
         return null;
@@ -35,48 +55,48 @@ public class ManagerServiceBean implements ManagerService {
     }
 
     @Override
-    public ResultMessage updateOpenRequest(int requestId,String requestState){
-        RequestState state=RequestState.strToRequestState(requestState);
-        RequestOpen request=requestDao.getOpenRequest(requestId);
+    public ResultMessage updateOpenRequest(int requestId, String requestState) {
+        RequestState state = RequestState.strToRequestState(requestState);
+        RequestOpen request = requestDao.getOpenRequest(requestId);
         request.setState(requestState);
-        if(state==RequestState.DENIED){//拒绝申请
+        if (state == RequestState.DENIED) {//拒绝申请
             return requestDao.updateOpenRequest(request);
-        }else if(state==RequestState.APPROVED){//同意申请
-            Hostel hostel=request.getHostel();
+        } else if (state == RequestState.APPROVED) {//同意申请
+            Hostel hostel = request.getHostel();
             hostel.setPermitted(true);
-            ResultMessage msg1=hostelDao.update(hostel);
-            ResultMessage msg2=requestDao.updateOpenRequest(request);
-            if(msg1==ResultMessage.SUCCESS&&msg2==ResultMessage.SUCCESS){
+            ResultMessage msg1 = hostelDao.update(hostel);
+            ResultMessage msg2 = requestDao.updateOpenRequest(request);
+            if (msg1 == ResultMessage.SUCCESS && msg2 == ResultMessage.SUCCESS) {
                 return ResultMessage.SUCCESS;
-            }else {
+            } else {
                 return ResultMessage.FAILURE;
             }
-        }else {//没审核。。。
+        } else {//没审核。。。
             return ResultMessage.SUCCESS;
         }
     }
 
     @Override
-    public ResultMessage updateModifyRequest(int requestId,String requestState){
-        System.out.print("in service ---modifyRequest id="+requestId+"  "+requestState);
-        RequestState state=RequestState.strToRequestState(requestState);
-        RequestModify request=requestDao.getModifyRequest(requestId);
+    public ResultMessage updateModifyRequest(int requestId, String requestState) {
+        System.out.print("in service ---modifyRequest id=" + requestId + "  " + requestState);
+        RequestState state = RequestState.strToRequestState(requestState);
+        RequestModify request = requestDao.getModifyRequest(requestId);
         request.setState(requestState);
-        if(state==RequestState.DENIED){//拒绝修改请求
+        if (state == RequestState.DENIED) {//拒绝修改请求
             return requestDao.updateModifyRequest(request);
-        }else if(state==RequestState.APPROVED){//同意修改请求
-            Hostel hostel=request.getHostelOriginal();
+        } else if (state == RequestState.APPROVED) {//同意修改请求
+            Hostel hostel = request.getHostelOriginal();
             hostel.setAddress(request.getNewAddress());
             hostel.setPhone(request.getNewPhone());
             hostel.setName(request.getNewName());
-            ResultMessage msg1=hostelDao.update(hostel);
-            ResultMessage msg2=requestDao.updateModifyRequest(request);
-            if(msg1==ResultMessage.SUCCESS&&msg2==ResultMessage.SUCCESS){
+            ResultMessage msg1 = hostelDao.update(hostel);
+            ResultMessage msg2 = requestDao.updateModifyRequest(request);
+            if (msg1 == ResultMessage.SUCCESS && msg2 == ResultMessage.SUCCESS) {
                 return ResultMessage.SUCCESS;
-            }else {
+            } else {
                 return ResultMessage.FAILURE;
             }
-        }else {//没审核。。。
+        } else {//没审核。。。
             return ResultMessage.SUCCESS;
         }
     }
@@ -123,30 +143,47 @@ public class ManagerServiceBean implements ManagerService {
 
     }
 
+    @Override
+    public List<IncomeVO> getHostelIncomes() {
+        List<IncomeVO> ans = new ArrayList<IncomeVO>();
+        List<Hostel> hostels = getAllPermittedHostels();
+        for (Hostel hostel : hostels) {
+            double income = hostelService.getIncome(hostel.getId());
+            IncomeVO incomeVO = new IncomeVO();
+            incomeVO.setValue(income);
+            incomeVO.setName(hostel.getName());
+            incomeVO.setHostelId(hostel.getUserid());
+            ans.add(incomeVO);
+        }
+        return ans;
+    }
+
+    @Override
+    public List<LiveInNumVO> getLiveInNums() {
+        List<LiveInNumVO> ans = new ArrayList<LiveInNumVO>();
+        List<Hostel> hostels = getAllPermittedHostels();
+        for (Hostel hostel : hostels) {
+            LiveInNumVO vo = new LiveInNumVO();
+            vo.setName(hostel.getName());
+            vo.setHostelId(hostel.getUserid());
+            vo.setY(hostelService.getLiveInNum(hostel.getId()));
+            ans.add(vo);
+        }
+        return ans;
+    }
 
     @Override
     public List<Hostel> getAllPermittedHostels() {
         return hostelService.getAllPermittedHostels();
     }
 
-
     @Override
     public List<Member> getAllMembers() {
         return vipDao.getAll();
     }
 
-    @Autowired
-    private HostelDAO hostelDao;
-    @Autowired
-    private PayBillDAO payBillDao;
-    @Autowired
-    private MemberDAO vipDao;
-    @Autowired
-    private UserDAO userDao;
-    @Autowired
-    private RequestDAO requestDao;
-    @Autowired
-    private HostelService hostelService;
-    @Autowired
-    private UserService userService;
+    @Override
+    public Manager getById(int managerId) {
+        return managerDAO.get(managerId);
+    }
 }

@@ -38,7 +38,8 @@ public class LoginController {
 
     @RequestMapping(value = "/logout")
     public ModelAndView logout(HttpSession session) {
-        session.removeAttribute("vip");
+        session.removeAttribute("member");
+        session.removeAttribute("hostel");
         session.removeAttribute("user");
         return new ModelAndView("login", "command", new UserVO());
     }
@@ -85,7 +86,7 @@ public class LoginController {
                 session.setAttribute("hostelVO", hostelVO);
                 return new ModelAndView("redirect:/hostel/home");
             case "manager":
-                return new ModelAndView("manager/index");
+                return new ModelAndView("redirect:/HostelManager/home");
             default:
                 return new ModelAndView("404");
         }

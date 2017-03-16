@@ -242,4 +242,18 @@ public interface HostelService {
      * @return
      */
     public ResultMessage activeRoom(int roomId);
+
+    /**
+     * 所有入住人数统计
+     *
+     * @param hostelId
+     * @return
+     */
+    public int getLiveInNum(int hostelId);
+
+    /**
+     * @param id
+     * @return
+     */
+    public Hostel getHostel(int id);
 }

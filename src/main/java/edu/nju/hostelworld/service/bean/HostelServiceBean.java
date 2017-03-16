@@ -27,6 +27,24 @@ import static edu.nju.hostelworld.util.Constants.*;
 @Service
 public class HostelServiceBean implements HostelService {
 
+    //   ----------------------------------------
+    @Autowired
+    HostelDAO hostelDao;
+    @Autowired
+    HostelRoomDAO roomDao;
+    @Autowired
+    RequestDAO requestDao;
+    @Autowired
+    UserDAO userDao;
+    @Autowired
+    MemberDAO vipDao;
+    @Autowired
+    LiveBillDAO liveBillDao;
+    @Autowired
+    PayBillDAO payBillDao;
+    @Autowired
+    MemberService vipService;
+
     @Override
     public ResultMessage init(int hostelId) {
         Hostel hostel = getById(hostelId);
@@ -70,11 +88,11 @@ public class HostelServiceBean implements HostelService {
     }
 
     @Override
-    public ResultMessage update(int id,String name,String address,String phone) {
+    public ResultMessage update(int id, String name, String address, String phone) {
         System.out.println("in service updateHostelInfo  ");
-        System.out.print(id+" "+name+" "+address+" "+phone);
+        System.out.print(id + " " + name + " " + address + " " + phone);
         //TODO 待测试
-        RequestModify requestModify=new RequestModify();
+        RequestModify requestModify = new RequestModify();
         requestModify.setNewAddress(address);
         requestModify.setNewName(name);
         requestModify.setNewPhone(phone);
@@ -82,7 +100,7 @@ public class HostelServiceBean implements HostelService {
         try {
 
             requestDao.addModifyRequest(requestModify);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return ResultMessage.FAILURE;
         }
@@ -146,6 +164,14 @@ public class HostelServiceBean implements HostelService {
         User manager = userDao.get(MANAGER_ID);
         manager.setBankMoney(manager.getBankMoney() + money);
         return userDao.update(manager);
+    }
+
+    @Override
+    public int getLiveInNum(int hostelId) {
+        Map map = new HashMap<String, Object>();
+        map.put("hostel.id", hostelId);
+        map.put("type", true);
+        return liveBillDao.getByRestrictEqual(map).size();
     }
 
     @Override
@@ -291,7 +317,7 @@ public class HostelServiceBean implements HostelService {
         System.out.println();
         System.out.println("HERE TO GET");
         //System.out.println("HERE TO SERVICE GET");
-        return hostelDao.getByRestrictEqual("permitted", false);
+        return hostelDao.getByRestrictEqual("permitted", true);
     }
 
     @Override
@@ -301,35 +327,23 @@ public class HostelServiceBean implements HostelService {
         map.put("counted", false);
         return payBillDao.getByRestrictEqual(map);
     }
+
     @Override
-    public ResultMessage invalidateRoom(int roomId){
-        HostelRoom room=roomDao.get(roomId);
+    public ResultMessage invalidateRoom(int roomId) {
+        HostelRoom room = roomDao.get(roomId);
         room.setValid(false);
         return roomDao.update(room);
     }
+
     @Override
-    public ResultMessage activeRoom(int roomId){
-        HostelRoom room=roomDao.get(roomId);
+    public ResultMessage activeRoom(int roomId) {
+        HostelRoom room = roomDao.get(roomId);
         room.setValid(true);
         return roomDao.update(room);
     }
 
-
-    //   ----------------------------------------
-    @Autowired
-    HostelDAO hostelDao;
-    @Autowired
-    HostelRoomDAO roomDao;
-    @Autowired
-    RequestDAO requestDao;
-    @Autowired
-    UserDAO userDao;
-    @Autowired
-    MemberDAO vipDao;
-    @Autowired
-    LiveBillDAO liveBillDao;
-    @Autowired
-    PayBillDAO payBillDao;
-    @Autowired
-    MemberService vipService;
+    @Override
+    public Hostel getHostel(int id) {
+        return hostelDao.get(id);
+    }
 }

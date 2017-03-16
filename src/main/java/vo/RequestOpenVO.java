@@ -14,6 +14,9 @@ import java.util.List;
 public class RequestOpenVO {
     private int id;
 
+
+    private int hostel_lookid;
+    private int hostel_id;
     private String hostel_img;
     private String hostel_phone;
     private String hostel_address;
@@ -21,17 +24,19 @@ public class RequestOpenVO {
 
     private RequestState state;
 
-    public RequestOpenVO(RequestOpen request){
-        this.id=request.getId();
-        this.hostel_img=request.getHostel().getImg();
-        this.hostel_phone=request.getHostel().getPhone();
-        this.hostel_address=request.getHostel().getAddress();
-        this.hostel_name=request.getHostel().getName();
+    public RequestOpenVO(RequestOpen request) {
+        this.hostel_id = request.getId();
+        this.id = request.getHostel().getId();
+        this.hostel_lookid = request.getHostel().getUserid();
+        this.hostel_img = request.getHostel().getImg();
+        this.hostel_phone = request.getHostel().getPhone();
+        this.hostel_address = request.getHostel().getAddress();
+        this.hostel_name = request.getHostel().getName();
     }
 
-    public static List<RequestOpenVO> entityToVO(List<RequestOpen> requests){
-        List<RequestOpenVO> res=new ArrayList<RequestOpenVO>();
-        for(RequestOpen request:requests){
+    public static List<RequestOpenVO> entityToVO(List<RequestOpen> requests) {
+        List<RequestOpenVO> res = new ArrayList<RequestOpenVO>();
+        for (RequestOpen request : requests) {
             res.add(new RequestOpenVO(request));
         }
         return res;
@@ -59,5 +64,13 @@ public class RequestOpenVO {
 
     public RequestState getState() {
         return state;
+    }
+
+    public int getHostel_id() {
+        return hostel_id;
+    }
+
+    public int getHostel_lookid() {
+        return hostel_lookid;
     }
 }

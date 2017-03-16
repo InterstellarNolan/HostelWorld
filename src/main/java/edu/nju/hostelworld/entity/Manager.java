@@ -14,7 +14,7 @@ public class Manager {
     private int userId= 3000000;
     private String name;
     private String phone = "76668888";
-    private String address = "北京";
+    private String address = "中南海";
     private String avatar;
 
     @Id
