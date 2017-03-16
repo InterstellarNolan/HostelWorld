@@ -34,7 +34,7 @@ public class MemberServiceBean implements MemberService {
     public void init(int memberId) {
 
         Member vip = getById(memberId);
-        System.out.println(vip.getState());
+        //System.out.println(vip.getState());
         MemberState vipState = MemberState.strToMemberState(vip.getState());
         if (vipState == MemberState.UNACTIVATED || vipState == MemberState.STOP) {
             //未激活or停卡 不涉及根据时间改变状态
@@ -230,7 +230,10 @@ public class MemberServiceBean implements MemberService {
 
     @Override
     public List<Hostel> getAllPermittedHostels() {
-        return hostelDao.getByRestrictEqual("permitted", false);
+        System.out.println();
+        System.out.println();
+        System.out.println("HERE TO GET");
+        return hostelDao.getByRestrictEqual("permitted", true);
     }
 
     /**

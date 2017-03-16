@@ -147,9 +147,11 @@ public class MemberController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());
+        System.out.println(member.getUserid());
         List<Hostel> list = hostelService.getAllPermittedHostels();
+
         List<HostelVO> list1 = HostelVO.entityToVO(list);
-        System.out.println(list.size());
+
         for (int i = 0; i < list1.size(); i++) {
             System.out.println(list1.get(i).getId());
          }

@@ -64,7 +64,7 @@
                 <td>${item.roomId}</td>
                 <td>${item.name}</td>
                 <td>${item.price}</td>
-                <td><a href="<%=request.getContextPath()%>/member/room/${item.roomId}"></a>预定</td>
+                <td><a href="<%=request.getContextPath()%>/member/room/${item.roomId}">预定</a></td>
             </tr>
         </c:forEach>
     </table>
