@@ -1,12 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2017/3/15
-  Time: 21:53
+  Date: 2017/3/16
+  Time: 12:40
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <title>Hostel World</title>
@@ -27,35 +27,27 @@
         </ul>
     </nav>
 </div>
-<h2>房间可用</h2>
-<table border="2">
-    <tr>
-        <td>房间编号</td>
-        <td>房间类型</td>
-        <td>房间价格</td>
-    </tr>
-    <c:forEach items="${roomList}" var="item">
+<div>
+    <table border="2">
         <tr>
-            <td><a href="<%=request.getContextPath()%>/hostel/room/${item.roomId}">${item.roomId}</a></td>
-            <td>${item.name}</td>
-            <td>${item.price}</td>
+            <td>会员编号</td>
+            <td>会员名称</td>
+            <td>房间状态</td>
+            <td>预定日期</td>
+            <td>入住日期</td>
+            <td>退房日期</td>
+            <td>房间编号</td>
+            <td>房间类型</td>
+            <td>房间价格</td>
         </tr>
-    </c:forEach>
-</table>
-<h2>房间暂不可用</h2>
-<table border="2">
-    <tr>
-        <td>房间编号</td>
-        <td>房间类型</td>
-        <td>房间价格</td>
-    </tr>
-    <c:forEach items="${InvalidroomList}" var="iitem">
-        <tr>
-            <td>${iitem.roomId}</td>
-            <td>${iitem.name}</td>
-            <td>${iitem.price}</td>
-        </tr>
-    </c:forEach>
-</table>
+        <c:forEach items="${InvalidroomList}" var="iitem">
+            <tr>
+                <td><a href="<%=request.getContextPath()%>/hostel/room/${iitem.roomId}">${iitem.roomId}</a></td>
+                <td>${iitem.name}</td>
+                <td>${iitem.price}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
 </body>
 </html>

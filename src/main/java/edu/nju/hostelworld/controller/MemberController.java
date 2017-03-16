@@ -212,11 +212,11 @@ public class MemberController {
         model.addAttribute("member", member);
         HostelRoom room = hostelService.getRoomById(Integer.parseInt(id));
         model.addAttribute("room", room);
-        return new ModelAndView("roomHome");
+        return new ModelAndView("memberroomHome");
     }
 
     @RequestMapping(value = "/book")
-    public ModelAndView book(Model model, String memberid, String roomid, String indate, String outdate, HttpServletRequest request) {
+    public ModelAndView book(Model model,  String roomid, String indate, String outdate, HttpServletRequest request) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Member member = memberService.getById(user.getUserid());

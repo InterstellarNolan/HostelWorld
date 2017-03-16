@@ -43,7 +43,7 @@
             <td>${bitem.liveInDate}</td>
             <td>${bitem.roomName}</td>
             <td>${bitem.roomPrice}</td>
-            <td><a href="<%=request.getContextPath()%>/member/unbook/${bitem.id}">退订</a></td>
+            <td><a href="<%=request.getContextPath()%>/member/unbook/${bitem.id}">退订，订金20元将退回会员卡</a></td>
         </tr>
     </c:forEach>
 </table>

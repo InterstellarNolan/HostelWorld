@@ -28,7 +28,7 @@
         <table border="2">
             <tr>
                 <td>会员编号</td>
-                <td><input type="text" name="memberid" value="${member.userid}"></td>
+                <td><input type="text" readonly="readonly" value="${member.userid}"></td>
             </tr>
             <tr>
                 <td>房间编号</td>
@@ -43,7 +43,7 @@
                 <td><input type="date" name="outdate"></td>
             </tr>
         </table>
-        <input type="submit" value="更改">
+        <input type="submit" value="花费会员卡中20元进行预订">
     </form>
 </div>
 </body>

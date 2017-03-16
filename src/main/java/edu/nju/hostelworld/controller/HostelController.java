@@ -1,6 +1,7 @@
 package edu.nju.hostelworld.controller;
 
 import edu.nju.hostelworld.entity.Hostel;
+import edu.nju.hostelworld.entity.HostelRoom;
 import edu.nju.hostelworld.entity.User;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.UserService;
@@ -18,6 +19,7 @@ import vo.HostelVO;
 import vo.OnLineUserVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,8 +78,19 @@ public class HostelController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Hostel hostel = hostelService.getById(user.getUserid());
-        List<HostelRoomVO> roomlist = HostelRoomVO.entityToVO(hostelService.getAllRooms(hostel.getId()));
+        List<HostelRoom> rooms=hostelService.getAllValidRooms(hostel.getId());
+        List<HostelRoom> allrooms=hostelService.getAllRooms(hostel.getId());
+        List<HostelRoom> allInvalidrooms=new ArrayList<HostelRoom>();
+        for(int i=0;i<allrooms.size();i++){
+            HostelRoom room=allrooms.get(i);
+            if(!room.getValid()){
+                allInvalidrooms.add(room);
+            }
+        }
+        List<HostelRoomVO> roomlist = HostelRoomVO.entityToVO(rooms);
+        List<HostelRoomVO> Invalidroomlist=HostelRoomVO.entityToVO(allInvalidrooms);
         model.addAttribute("roomList", roomlist);
+        model.addAttribute("InvalidroomList", Invalidroomlist);
         return new ModelAndView("hostelRooms");
     }
 
@@ -96,5 +109,14 @@ public class HostelController {
         ResultMessage rmsg=hostelService.addRoom(hostel.getId(),vo );
         model.addAttribute("message",rmsg.toShow());
         return new ModelAndView("hosteladdRoom");
+    }
+    @RequestMapping(value="/room/{id}")
+    public ModelAndView room(Model model, @PathVariable("id") String id, HttpServletRequest request){
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Hostel hostel = hostelService.getById(user.getUserid());
+        hostelService.getAllLiveBills(hostel.getId());
+        hostelService.getAllBookBills(hostel.getId());
+        return new ModelAndView("hostelroomHome");
     }
 }

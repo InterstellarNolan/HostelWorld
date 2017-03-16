@@ -156,6 +156,7 @@ public class HostelServiceBean implements HostelService {
             liveBill.setMember(vip);
         }
         HostelRoom room = roomDao.get(liveInVO.getRoomId());
+        //room.setValid(false);
         liveBill.setType(true);
         liveBill.setRoom(room);
         liveBill.setHostel(room.getHostel());
@@ -163,6 +164,7 @@ public class HostelServiceBean implements HostelService {
         liveBill.setUserRealName(liveInVO.getUserRealName());
         liveBill.setDate(new Date().getTime());
         try {
+    //roomDao.update(room);
             liveBillDao.add(liveBill);
             return ResultMessage.SUCCESS;
         } catch (Exception e) {
@@ -176,6 +178,7 @@ public class HostelServiceBean implements HostelService {
         LiveBill liveBill = new LiveBill();
         Member vip = vipDao.get(liveOutVO.getVipId());
         HostelRoom room = roomDao.get(liveOutVO.getRoomId());
+        //room.setValid(true);
         liveBill.setType(false);
         liveBill.setRoom(room);
         liveBill.setHostel(room.getHostel());
@@ -184,6 +187,7 @@ public class HostelServiceBean implements HostelService {
         liveBill.setUserRealName(liveOutVO.getUserRealName());
         liveBill.setDate(new Date().getTime());
         try {
+            //roomDao.update(room);
             liveBillDao.add(liveBill);
             return ResultMessage.SUCCESS;
         } catch (Exception e) {
@@ -281,7 +285,7 @@ public class HostelServiceBean implements HostelService {
         System.out.println();
         System.out.println("HERE TO GET");
         //System.out.println("HERE TO SERVICE GET");
-        return hostelDao.getByRestrictEqual("permitted", true);
+        return hostelDao.getByRestrictEqual("permitted", false);
     }
 
     @Override

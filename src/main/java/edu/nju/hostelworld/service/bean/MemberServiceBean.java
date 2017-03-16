@@ -162,10 +162,10 @@ public class MemberServiceBean implements MemberService {
                 bookBill.setCreateDate(new Date().getTime());
                 bookBill.setCheckInDate(DateHandler.strToLong(bookVO.getCheckInDate()));
                 bookBill.setCheckOutDate(DateHandler.strToLong(bookVO.getCheckOutDate()));
-                room.setValid(false);
+                //room.setValid(false);
                 try {
                     bookBillDao.add(bookBill);
-                    hostelRoomDAO.update(room);
+                    //hostelRoomDAO.update(room);
                     return ResultMessage.SUCCESS;
                 } catch (Exception e) {
                     return ResultMessage.FAILURE;
@@ -189,9 +189,9 @@ public class MemberServiceBean implements MemberService {
             //退钱
             payMoney(memberId, -MONEY_BOOK);
             //使该预订订单失效！~~~
-            room.setValid(true);
+            //room.setValid(true);
             bookBill.setValid(false);
-            hostelRoomDAO.update(room);
+            //hostelRoomDAO.update(room);
             return bookBillDao.update(bookBill);
         }
     }
