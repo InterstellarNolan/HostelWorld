@@ -1,11 +1,10 @@
 package edu.nju.hostelworld.controller;
 
-import edu.nju.hostelworld.entity.BookBill;
-import edu.nju.hostelworld.entity.Hostel;
-import edu.nju.hostelworld.entity.HostelRoom;
-import edu.nju.hostelworld.entity.User;
+import edu.nju.hostelworld.entity.*;
 import edu.nju.hostelworld.service.HostelService;
+import edu.nju.hostelworld.service.ManagerService;
 import edu.nju.hostelworld.service.UserService;
+import edu.nju.hostelworld.util.RequestState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +30,8 @@ public class HostelController {
     HostelService hostelService;
     @Autowired
     UserService userService;
+    @Autowired
+    ManagerService managerService;
 
     @RequestMapping(value = "/home")
     public ModelAndView homePage(Model model, HttpServletRequest request) {
@@ -192,6 +193,16 @@ public class HostelController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Hostel hostel = hostelService.getById(user.getUserid());
+
+        List<RequestOpen> listOpen = managerService.getOpenRequests();
+        for (int i = listOpen.size() - 1; i >= 0; i--) {
+            RequestOpen open = listOpen.get(i);
+            if (open.getHostel().getId() == hostel.getId()) {
+                model.addAttribute("state", open.getState());
+                break;
+            }
+            model.addAttribute("stats", "未提交开业申请");
+        }
         model.addAttribute("hostel", hostel);
         model.addAttribute("user", user);
         model.addAttribute("roomNum", hostelService.getAllRooms(hostel.getId()).size());
@@ -204,7 +215,13 @@ public class HostelController {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
         Hostel hostel = hostelService.getById(user.getUserid());
-
+        List<RequestOpen> listOpen = managerService.getOpenRequests();
+        for (int i = 0; i < listOpen.size(); i++) {
+            RequestOpen open = listOpen.get(i);
+            if (open.getHostel().getId() == hostel.getId() && RequestState.strToRequestState(open.getState()).equals(RequestState.UNCHECK)) {
+                return new ModelAndView("/error/alreadyRequest");
+            }
+        }
         ResultMessage rmsg = hostelService.requestManager(hostel.getId());
         model.addAttribute("message", rmsg.toShow());
         model.addAttribute("hostel", hostel);

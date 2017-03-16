@@ -60,6 +60,10 @@
                 <td>可用房间数量</td>
                 <td><input type="text" readonly="readonly" value="${validroomNum}"></td>
             </tr>
+            <tr>
+                <td>开业申请状态</td>
+                <td><input type="text" readonly="readonly" value="${state}"></td>
+            </tr>
         </table>
         <input type="submit" value="申请开业">
     </form>
