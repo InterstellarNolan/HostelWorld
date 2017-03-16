@@ -37,10 +37,10 @@ public class BookBillVO {
         this.id = bookBillEntity.getId();
         this.liveInDate = bookBillEntity.getCheckInDateStr();
         this.createDate = bookBillEntity.getCreateDateStr();
-        this.hostelId = bookBillEntity.getHostel().getId();
+        this.hostelId = bookBillEntity.getHostel().getUserid();
         this.hostelAddress = bookBillEntity.getHostel().getAddress();
         this.hostelName = bookBillEntity.getHostel().getName();
-        this.vipId = bookBillEntity.getMemberId();
+        this.vipId = bookBillEntity.getMember().getUserid();
         this.roomId = bookBillEntity.getRoom().getId();
         this.roomImg = bookBillEntity.getRoom().getImg();
         this.roomName = bookBillEntity.getRoom().getName();

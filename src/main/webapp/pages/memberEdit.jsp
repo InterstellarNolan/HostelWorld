@@ -20,6 +20,7 @@
             <li><a href="<%=request.getContextPath()%>/member/analysis">统计信息</a></li>
             <li><a href="#">修改资料</a></li>
             <li><a href="<%=request.getContextPath()%>/member/charge">会员卡充值</a></li>
+            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
         </ul>
     </nav>
 </div>

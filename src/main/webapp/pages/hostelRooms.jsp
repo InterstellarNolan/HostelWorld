@@ -24,6 +24,7 @@
             <li><a href="<%=request.getContextPath()%>/hostel/analysis">统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
             <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房结账</a></li>
+            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
         </ul>
     </nav>
 </div>
@@ -51,7 +52,7 @@
     </tr>
     <c:forEach items="${InvalidroomList}" var="iitem">
         <tr>
-            <td>${iitem.roomId}</td>
+            <td><a href="<%=request.getContextPath()%>/hostel/roomInvalid/${iitem.roomId}">${iitem.roomId}</a></td>
             <td>${iitem.name}</td>
             <td>${iitem.price}</td>
         </tr>

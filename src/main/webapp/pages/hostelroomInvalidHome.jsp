@@ -43,13 +43,14 @@
                 <td>房间价格</td>
                 <td><input type="text" name="price" value="${room.price}"></td>
             </tr>
+
         </table>
         <input type="submit" value="更改房间">
     </form>
 
     <div id="message">${message}</div>
     <a href="<%=request.getContextPath()%>/hostel/rooms">返回房间列表</a>
-    <a href="<%=request.getContextPath()%>/hostel/roomPaused/${room.id}">停用房间</a>
+    <a href="<%=request.getContextPath()%>/hostel/roomActive/${room.id}">启用房间</a>
 </div>
 </body>
 </html>

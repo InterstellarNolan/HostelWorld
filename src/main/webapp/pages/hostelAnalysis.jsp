@@ -16,19 +16,22 @@
 <div>
     <nav>
         <ul>
-            <li><a href="<%=request.getContextPath()%>/member/home">基本信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/hostels">看看客栈</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/unbook">退订房间</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/home">基本信息</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/request">开店申请</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/edit">修改申请</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/rooms">所有房间</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/addroom">新增房间</a></li>
             <li><a href="#">统计信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/edit">修改资料</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/charge">会员卡充值</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
+            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房结账</a></li>
             <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
         </ul>
     </nav>
 </div>
-<h2>您的订房记录</h2>
+<h2>本客栈的房间订房记录</h2>
 <table border="2">
     <tr>
+        <td>会员编号</td>
         <td>客栈名称</td>
         <td>客栈地址</td>
         <td>订房日期</td>
@@ -39,6 +42,7 @@
     </tr>
     <c:forEach items="${bookbillVO}" var="bitem">
         <tr>
+            <td>${bitem.vipId}</td>
             <td>${bitem.hostelName}</td>
             <td>${bitem.hostelAddress}</td>
             <td>${bitem.createDate}</td>
@@ -49,9 +53,10 @@
         </tr>
     </c:forEach>
 </table> 
-<h2>您的付款记录</h2>
+<h2>在本客栈消费的的付款记录</h2>
 <table border="2">
     <tr>
+        <td>会员编号</td>
         <td>客栈名称</td>
         <td>客栈地址</td>
         <td>付款日期</td>
@@ -61,6 +66,7 @@
     </tr>
     <c:forEach items="${paybillVO}" var="pitem">
         <tr>
+            <td>${pitem.vipId}</td>
             <td>${pitem.hostelName}</td>
             <td>${pitem.hostelAddress}</td>
             <td>${pitem.createDate}</td>
@@ -70,9 +76,10 @@
         </tr>
     </c:forEach>
 </table>
-<h2>您的入住记录</h2>
+<h2>本客栈房间的入住记录</h2>
 <table border="2">
     <tr>
+        <td>会员编号</td>
         <td>客栈名称</td>
         <td>客栈地址</td>
         <td>客栈编号</td>
@@ -82,6 +89,7 @@
     </tr>
     <c:forEach items="${checkInbillVO}" var="ciitem">
         <tr>
+            <td>${citem.vipId}</td>
             <td>${ciitem.hostelName}</td>
             <td>${ciitem.hostelAddress}</td>
             <td>${ciitem.hostelId}</td>
@@ -92,9 +100,10 @@
     </c:forEach>
 </table>
 
-<h2>您的退房记录</h2>
+<h2>本客栈房间的退房记录</h2>
 <table border="2">
     <tr>
+        <td>会员编号</td>
         <td>客栈名称</td>
         <td>客栈地址</td>
         <td>客栈编号</td>
@@ -104,6 +113,7 @@
     </tr>
     <c:forEach items="${checkOutbillVO}" var="coitem">
         <tr>
+            <td>${coitem.vipId}</td>
             <td>${coitem.hostelName}</td>
             <td>${coitem.hostelAddress}</td>
             <td>${coitem.hostelId}</td>

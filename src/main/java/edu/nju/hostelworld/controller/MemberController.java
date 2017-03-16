@@ -201,7 +201,7 @@ public class MemberController {
         Member member = memberService.getById(user.getUserid());
         ResultMessage rmsg=memberService.unbook(member.getId(), Integer.parseInt(id));
         model.addAttribute("message",rmsg.toShow());
-        return new ModelAndView("memberUnbook");
+        return new ModelAndView("redirect:/member/unbook");
     }
 
     @RequestMapping(value = "/room/{id}")

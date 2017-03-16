@@ -6,14 +6,10 @@ import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.util.RequestState;
 import edu.nju.hostelworld.util.ResultMessage;
-import vo.CheckInVO;
-import vo.CheckOutVO;
-import vo.PayVO;
-import vo.HostelRoomVO;
-import vo.HostelVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vo.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -74,18 +70,24 @@ public class HostelServiceBean implements HostelService {
     }
 
     @Override
-    public ResultMessage update(HostelVO hostelVO) {
-        //TODO 这里有问题，Request表只能存当前存在的hostel。。
-//        // 是否考虑新建一个存储hostel临时信息的表
-//        RequestModify requestModify=new RequestModify();
-//        requestModify.setHostelOriginal(getById(hostel.getId()));
-//        requestModify.setHostelNew(hostel);
-//        try {
-//            requestDao.addModifyRequest(requestModify);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return ResultMessage.FAILURE;
-//        }
+    public ResultMessage update(int id,String name,String address,String phone) {
+        System.out.println("in service updateHostelInfo  ");
+        System.out.print(id+" "+name+" "+address+" "+phone);
+        //TODO 待测试
+        RequestModify requestModify=new RequestModify();
+        Hostel hostel1=hostelDao.get(id);
+        hostel1.setName(name);
+        hostel1.setAddress(address);
+        hostel1.setPhone(phone);
+        requestModify.setHostelNew(hostel1);
+        requestModify.setHostelOriginal(hostelDao.get(id));
+        try {
+
+            requestDao.addModifyRequest(requestModify);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultMessage.FAILURE;
+        }
         return ResultMessage.SUCCESS;
 //        return hostelDao.update(hostel);
     }
@@ -164,7 +166,7 @@ public class HostelServiceBean implements HostelService {
         liveBill.setUserRealName(liveInVO.getUserRealName());
         liveBill.setDate(new Date().getTime());
         try {
-    //roomDao.update(room);
+            //roomDao.update(room);
             liveBillDao.add(liveBill);
             return ResultMessage.SUCCESS;
         } catch (Exception e) {
@@ -226,10 +228,13 @@ public class HostelServiceBean implements HostelService {
     }
 
     @Override
-    public ResultMessage updateRoom(int hostelId, HostelRoomVO roomVO) {
+    public ResultMessage updateRoom(int roomId, RoomVO_input roomVO) {
 //        TODO updateRoom!!!!
-        return null;
-//        return roomDao.update(room);
+        HostelRoom room = roomDao.get(roomId);
+        room.setName(roomVO.getName());
+        room.setImg(roomVO.getImg());
+        room.setPrice(roomVO.getPrice());
+        return roomDao.update(room);
     }
 
     @Override
@@ -295,6 +300,19 @@ public class HostelServiceBean implements HostelService {
         map.put("counted", false);
         return payBillDao.getByRestrictEqual(map);
     }
+    @Override
+    public ResultMessage invalidateRoom(int roomId){
+        HostelRoom room=roomDao.get(roomId);
+        room.setValid(false);
+        return roomDao.update(room);
+    }
+    @Override
+    public ResultMessage activeRoom(int roomId){
+        HostelRoom room=roomDao.get(roomId);
+        room.setValid(true);
+        return roomDao.update(room);
+    }
+
 
     //   ----------------------------------------
     @Autowired

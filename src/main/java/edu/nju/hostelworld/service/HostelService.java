@@ -55,10 +55,10 @@ public interface HostelService {
      * 改完并没有保存，而是向总经理提交申请
      * 总经理同意店信息才会更新
      *
-     * @param hostelVO
+     * @param
      * @return SUCCESS, FAILURE
      */
-    public ResultMessage update(HostelVO hostelVO);
+    public ResultMessage update(int id, String name, String address, String phone);
 
     /**
      * 登记住户的结账
@@ -133,11 +133,11 @@ public interface HostelService {
     /**
      * 客栈更新房间计划（包括将该房间置为不可用，就是下架~），只能更新自己客栈的房间计划
      *
-     * @param hostelId
+     * @param roomId
      * @param roomVO
      * @return SUCCESS, FAILURE
      */
-    public ResultMessage updateRoom(int hostelId, HostelRoomVO roomVO);
+    public ResultMessage updateRoom(int roomId, RoomVO_input roomVO);
 
     /**
      * 获取本店预订数据，包括预订和取消预订
@@ -226,4 +226,20 @@ public interface HostelService {
      * @return
      */
     public List<PayBill> getAllUncountedPayBills(int hostelId);
+
+    /**
+     * 下架房间
+     *
+     * @param roomId
+     * @return
+     */
+    public ResultMessage invalidateRoom(int roomId);
+
+    /**
+     * 上架房间
+     *
+     * @param roomId
+     * @return
+     */
+    public ResultMessage activeRoom(int roomId);
 }
