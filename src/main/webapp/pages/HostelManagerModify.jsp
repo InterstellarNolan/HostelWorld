@@ -33,10 +33,10 @@
         <td>客栈地址</td>
 
     </tr>
-    <c:forEach items="${Modify}" var="ciitem">
+    <c:forEach items="${Modifylist}" var="ciitem">
         <tr>
             <td>
-                <a href="<%=request.getContextPath()%>/HostelManager/requestModifyDetail/${ciitem.hostelid}">${ciitem.hostelLookId}</a>
+                <a href="<%=request.getContextPath()%>/HostelManager/requestModifyDetail/${ciitem.id}">${ciitem.hostelLookId}</a>
             </td>
             <td>${ciitem.name_original}</td>
             <td>${ciitem.phone_original}</td>

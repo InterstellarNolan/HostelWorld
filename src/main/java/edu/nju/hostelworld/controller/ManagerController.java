@@ -62,37 +62,17 @@ public class ManagerController {
     @RequestMapping(value = "requestOpen", method = RequestMethod.GET)
     public ModelAndView requestOpenPage(Model model, HttpServletRequest request) {
         List<RequestOpen> list = managerService.getOpenRequests();
-
-
         List<RequestOpenVO> VO = RequestOpenVO.entityToVO(list);
-        //System.out.println();
-        //System.out.println();
-        //System.out.println();
-        //System.out.println("hostelid"+VO.get(0).getHostel_id()+"   hostel  look  id"+VO.get(0).getHostel_lookid());
         model.addAttribute("Openlist", VO);
         return new ModelAndView("HostelManagerOpen");
     }
 
     @RequestMapping(value = "requestOpen/{id}", method = RequestMethod.POST)
     public ModelAndView requestOpen(@PathVariable("id") String id, Model model, HttpServletRequest request, String state) {
-        //System.out.println();
-        //System.out.println();
-        //System.out.println();
-        //System.out.println(state+"               "+id);
-
         ResultMessage rmsg = managerService.updateOpenRequest(Integer.parseInt(id), state);
         List<RequestOpen> list = managerService.getOpenRequests();
-
-
-        //List<RequestOpenVO> VO = RequestOpenVO.entityToVO(list);
-        //System.out.println("hostelid"+VO.get(0).getHostel_id()+"   hostel  look  id"+VO.get(0).getHostel_lookid());
-        //model.addAttribute("Openlist", VO);
         model.addAttribute("message", rmsg.toShow());
         RequestOpen open = managerService.getOpen(Integer.parseInt(id));
-        //System.out.println();
-        //System.out.println();
-        //System.out.println();
-        //System.out.println("hostelid"+VO.get(0).getHostel_id()+"   hostel  look  id"+VO.get(0).getHostel_lookid());
         Hostel hostelid = open.getHostel();
         HostelVO vo = new HostelVO(hostelid);
         model.addAttribute("hostel", vo);
@@ -101,19 +81,9 @@ public class ManagerController {
 
     @RequestMapping(value = "requestOpenDetail/{id}")
     public ModelAndView requestOpenDetail(@PathVariable("id") String id, Model model, HttpServletRequest request) {
-        //Hostel hostel = hostelService.getById(Integer.parseInt(id));
-        //System.out.println();
-        //System.out.println();
-        //System.out.println();
-        //System.out.println(hostel.getUserid());
         RequestOpen open = managerService.getOpen(Integer.parseInt(id));
-        //System.out.println();
-        //System.out.println();
-        //System.out.println();
-        //System.out.println("hostelid"+VO.get(0).getHostel_id()+"   hostel  look  id"+VO.get(0).getHostel_lookid());
         Hostel hostelid = open.getHostel();
         model.addAttribute("Openlist", open);
-        //HostelVO vo = new HostelVO(hostel);
         model.addAttribute("hostel", hostelid);
         return new ModelAndView("HostelManagerOpenDetail");
     }
@@ -121,40 +91,38 @@ public class ManagerController {
     @RequestMapping(value = "requestModify", method = RequestMethod.GET)
     public ModelAndView requestModifyPage(Model model, HttpServletRequest request) {
         List<RequestModify> list = managerService.getModifyRequests();
-
-
-        //System.out.println();
-        //System.out.println();
-        //System.out.println();
-        //System.out.println(list.size());
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("size is " + list.size());
         List<RequestModifyVO> VO = RequestModifyVO.entityToVO(list);
-        model.addAttribute("Modify", VO);
-        return new ModelAndView("HostelManagerMo");
+        model.addAttribute("Modifylist", VO);
+        return new ModelAndView("HostelManagerModify");
     }
 
     @RequestMapping(value = "requestModify/{id}", method = RequestMethod.POST)
     public ModelAndView requestModify(@PathVariable("id") String id, Model model, HttpServletRequest request, String state) {
         ResultMessage rmsg = managerService.updateModifyRequest(Integer.parseInt(id), state);
         List<RequestModify> list = managerService.getModifyRequests();
-
-
-        List<RequestModifyVO> VO = RequestModifyVO.entityToVO(list);
-        model.addAttribute("Modify", VO);
         model.addAttribute("message", rmsg.toShow());
-        Hostel hostel = hostelService.getHostel(Integer.parseInt(id));
-        HostelVO vo = new HostelVO(hostel);
-        model.addAttribute("hostel", vo);
+        RequestModify open = managerService.getModify(Integer.parseInt(id));
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("size is " + open.getId());
+        //Hostel hostelid = open.getHostelOriginal();
+        //HostelVO vo = new HostelVO(hostelid);
+        //model.addAttribute("hostel", vo);
         return new ModelAndView("HostelManagerModify");
     }
 
     @RequestMapping(value = "requestModifyDetail/{id}")
-    public ModelAndView requestModifyDetail(@PathVariable("id") String id, Model model, HttpServletRequest request, String state) {
-        Hostel hostel = hostelService.getById(Integer.parseInt(id));
-        HostelVO vo1 = new HostelVO(hostel);
-        model.addAttribute("hostel", vo1);
-        RequestModify rm = managerService.getModify(Integer.parseInt(id));
-        RequestModifyVO vo = new RequestModifyVO(rm);
-        model.addAttribute("request", vo);
+    public ModelAndView requestModifyDetail(@PathVariable("id") String id, Model model, HttpServletRequest request) {
+        RequestModify open = managerService.getModify(Integer.parseInt(id));
+        //Hostel hostelid = open.getHostelOriginal();
+        RequestModifyVO vo = new RequestModifyVO(open);
+        model.addAttribute("Modifylist", vo);
+        //model.addAttribute("hostel", hostelid);
         return new ModelAndView("HostelManagerModifyDetail");
     }
 }

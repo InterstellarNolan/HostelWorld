@@ -61,11 +61,7 @@ public class ManagerServiceBean implements ManagerService {
 
     @Override
     public RequestModify getModify(int id) {
-        List<RequestModify> list = getModifyRequests();
-        for (int i = list.size() - 1; i >= 0; i--) {
-            if (list.get(i).getHostelOriginal().getId() == id) return list.get(i);
-        }
-        return null;
+        return requestDao.getModifyRequest(id);
     }
 
     @Override
