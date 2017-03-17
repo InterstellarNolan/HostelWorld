@@ -1,10 +1,10 @@
 package vo;
 
 /**
- * Created by disinuo on 17/3/11.
+ * Created by Administrator on 17/3/11.
  */
 public class RoomVO_input {
-    private double price=299;
+    private double price = 299;
     private String img = "无";
     private String name;
 

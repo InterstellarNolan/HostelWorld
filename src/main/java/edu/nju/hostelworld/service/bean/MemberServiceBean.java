@@ -48,34 +48,28 @@ public class MemberServiceBean implements MemberService {
         System.out.println(vip.getState());
         MemberState vipState = MemberState.strToMemberState(vip.getState());
         if (vipState == MemberState.UNACTIVATED || vipState == MemberState.STOP) {
-            //未激活or停卡 不涉及根据时间改变状态
             return;
         } else {
             long today = new Date().getTime();
             if (vipState == MemberState.PAUSED) {
-                //卡被暂停了。若时间超过一年 则变为stop
                 long pauseDate = vip.getPauseDate();
                 if (DateHandler.milliSecondToDay(today - pauseDate) >= DAY_OF_PAUSE_TO_STOP) {
-                    //暂停超过？天
                     vip.setState(MemberState.STOP.toString());
                     vipDao.update(vip);
                 }
             } else if (vipState == MemberState.NORMAL) {
-                //卡是正常状态。检测激活时间
                 long activateDate = vip.getActivateDate();
                 double moneyLeft = vip.getMoneyLeft();
                 double dayDifference = DateHandler.milliSecondToDay(today - activateDate);
                 if (dayDifference >= DAY_OF_NORMAL_TO_PAUSE) {
                     if (moneyLeft < MONEY_LEAST) {
-                        //激活超过?天,但不超过?1+?2天
-                        //卡余额不足，状态变成暂停，并记录暂停时间
                         if (dayDifference <= (DAY_OF_NORMAL_TO_PAUSE + DAY_OF_PAUSE_TO_STOP)) {
                             vip.setState(MemberState.PAUSED.toString());
                             vip.setPauseDate(activateDate + DateHandler.dayToMilliSecond(1));
-                        } else {//激活超过?1+?2天，卡余额不足，直接停卡！
+                        } else {
                             vip.setState(MemberState.STOP.toString());
                         }
-                    } else {//余额还足~ 更新激活日期为当前时间
+                    } else {
                         vip.setActivateDate(new Date().getTime());
                     }
                     vipDao.update(vip);

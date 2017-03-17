@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * Created by disinuo on 17/3/12.
+ * Created by Administrator on 17/3/12.
  */
 public class HostelVO {
     private int id;

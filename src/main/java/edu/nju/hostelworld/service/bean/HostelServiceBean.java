@@ -21,7 +21,7 @@ import static edu.nju.hostelworld.util.Constants.*;
 //import static edu.nju.hostelworld.util.Constants.RATE_MONEY_TO_SCORE;
 
 /**
- * Created by disinuo on 17/3/3.
+ * Created by Administrator on 17/3/3.
  */
 @Transactional
 @Service

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <%@include file="./common/head.jsp" %>
+
     <link href="../css/login.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="../css/w3.css">
     <link>
@@ -31,7 +31,7 @@
         </ul>
     </div>
 </div>
-<%@include file="./common/tail.jsp" %>
+
 
 </body>
 </html>
