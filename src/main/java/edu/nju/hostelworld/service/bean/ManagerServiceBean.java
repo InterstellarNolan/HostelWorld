@@ -5,6 +5,7 @@ import edu.nju.hostelworld.entity.*;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.ManagerService;
 import edu.nju.hostelworld.service.UserService;
+import edu.nju.hostelworld.util.Constants;
 import edu.nju.hostelworld.util.RequestState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,26 +127,32 @@ public class ManagerServiceBean implements ManagerService {
         } else {//结算到今天为止的
             ResultMessage msg;
             List<Hostel> hostels = hostelService.getAllPermittedHostels();
+            List<User> users = userService.getAll();
             //经理结算的总金额
             double allMoneyToPay = 0;
-            for (Hostel hostel : hostels) {
-                //获取客栈的`未结算金额`
-                double moneyShouldBePaid = hostel.getMoneyUncounted();
-                //给客栈加钱
-                msg = userService.changeBankMoneyAdd(hostel.getId(), moneyShouldBePaid);
-                if (msg != ResultMessage.SUCCESS) return msg;
-                //计算累计结算的钱数，最后一起从总经理的银行卡上扣除
-                allMoneyToPay += moneyShouldBePaid;
-                //将客栈的`未结算金额`置为0
-                hostel.setMoneyUncounted(0);
-                //更新客栈信息
-                msg = hostelDao.update(hostel);
-                if (msg != ResultMessage.SUCCESS) return msg;
+            for (User user : users) {
+                if (user.getType().equals("hostel")) {
+                    Hostel hostel = hostelService.getById(user.getUserid());
+                    //获取客栈的`未结算金额`
+                    double moneyShouldBePaid = hostel.getMoneyUncounted();
+                    double moneyShouldGet = moneyShouldBePaid * Constants.MANAGER_DISCOUNT;
+                    //给客栈加钱
+                    msg = userService.changeBankMoneyAdd(hostel.getId(), moneyShouldGet);
+                    if (msg != ResultMessage.SUCCESS) return msg;
+                    //计算累计结算的钱数，最后一起从总经理的银行卡上扣除
+                    allMoneyToPay += moneyShouldGet;
+                    //将客栈的`未结算金额`置为0
+                    hostel.setMoneyUncounted(0);
+                    //更新客栈信息
+                    msg = hostelDao.update(hostel);
+                    if (msg != ResultMessage.SUCCESS) return msg;
+                }
+
             }
             if (allMoneyToPay == 0) {
                 return ResultMessage.NO_NEED_COUNT;
             }
-            msg = userService.changeBankMoneyMinus(managerId, allMoneyToPay);
+            msg = userService.changeBankMoneyMinus(Constants.MANAGER_ID, allMoneyToPay);
             if (msg != ResultMessage.SUCCESS) return msg;
 //       -------到这里其实客栈和总经理之间的金钱交易就结束了，不过还要更新一下被结算的账单的状态orz，而且这一步会比较慢。。。
 //            为了总经理可以查看某个客栈的结算细节--账单信息，必须得更新这个状态位~！

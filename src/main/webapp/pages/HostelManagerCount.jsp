@@ -24,27 +24,21 @@
         </ul>
     </nav>
 </div>
-
-<h2>HostelWorld的开店申请</h2>
-<table border="2">
-    <tr>
-        <td>客栈编号</td>
-        <td>客栈名称</td>
-        <td>客栈电话</td>
-        <td>客栈地址</td>
-
-    </tr>
-    <c:forEach items="${Openlist}" var="ciitem">
-        <tr>
-            <td>
-                <a href="<%=request.getContextPath()%>/HostelManager/requestOpenDetail/${ciitem.id}">${ciitem.hostel_lookid}</a>
-            </td>
-            <td>${ciitem.hostel_name}</td>
-            <td>${ciitem.hostel_phone}</td>
-            <td>${ciitem.hostel_address}</td>
-        </tr>
-    </c:forEach>
-</table>
+<div>
+    <form action="<%=request.getContextPath()%>/HostelManager/count" method="post">
+        <table border="2">
+            <tr>
+                <td>您的编号：</td>
+                <td><input type="text" readonly="readonly" value="${IMmanager.userId}"></td>
+            </tr>
+            <tr>
+                <td>请输入银行卡密码：</td>
+                <td><input type="password" name="password" placeholder="注意不是登录密码"></td>
+            </tr>
+        </table>
+        <input type="submit" value="全部结算">
+    </form>
+</div>
 <div id="message">${message}</div>
 </body>
 </html>

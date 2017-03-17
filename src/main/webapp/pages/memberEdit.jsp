@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>HostelWorld</title>
+    <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
 <div>

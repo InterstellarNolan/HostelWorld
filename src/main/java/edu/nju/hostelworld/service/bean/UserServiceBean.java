@@ -33,6 +33,10 @@ public class UserServiceBean implements UserService {
     @Autowired
     ManagerDAO managerDAO;
 
+    @Override
+    public List<User> getAll() {
+        return userDao.getAll();
+    }
 
     @Override
     public ResultMessage register(Class<?> c, String userName, String password) {

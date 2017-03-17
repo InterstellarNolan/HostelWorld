@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Hostel World</title>
+    <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
 <div>
@@ -29,16 +30,16 @@
     <form action="<%=request.getContextPath()%>/HostelManager/requestModify/${Modifylist.id}" method="post">
         <table border="2">
             <tr>
-                <td>原客栈名称${Modifylist.name_original}</td>
-                <td>现客栈名称${Modifylist.name_new}</td>
+                <td>原客栈名称 ${Modifylist.name_original}</td>
+                <td>现客栈名称 ${Modifylist.name_new}</td>
             </tr>
             <tr>
-                <td>原客栈地址${Modifylist.address_original}</td>
-                <td>现客栈地址${Modifylist.address_new}</td>
+                <td>原客栈地址 ${Modifylist.address_original}</td>
+                <td>现客栈地址 ${Modifylist.address_new}</td>
             </tr>
             <tr>
-                <td>原客栈电话${Modifylist.phone_original}</td>
-                <td>现客栈电话${Modifylist.phone_new}</td>
+                <td>原客栈电话 ${Modifylist.phone_original}</td>
+                <td>现客栈电话 ${Modifylist.phone_new}</td>
             </tr>
             <tr>
                 <td>是否批准</td>

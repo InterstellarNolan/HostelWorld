@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Hostel World</title>
+    <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
 <div>

@@ -56,6 +56,7 @@ public class ManagerController {
         //model.addAttribute("incomeList", incomeVOList);
         //model.addAttribute("liveInNumList", liveInNumVOList);
         model.addAttribute("managerboss", manager);
+        model.addAttribute("uservo", user);
         return new ModelAndView("HostelManagerHome");
     }
 
@@ -124,5 +125,26 @@ public class ManagerController {
         model.addAttribute("Modifylist", vo);
         //model.addAttribute("hostel", hostelid);
         return new ModelAndView("HostelManagerModifyDetail");
+    }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public ModelAndView countPage(Model model, HttpServletRequest request) {
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Manager manager = managerService.getById(user.getUserid());
+        model.addAttribute("IMmanager", manager);
+        return new ModelAndView("HostelManagerCount");
+    }
+
+    @RequestMapping(value = "/count", method = RequestMethod.POST)
+    public ModelAndView countMoney(Model model, HttpServletRequest request, String password) {
+        OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
+        User user = userService.getById(userVO.getId());
+        Manager manager = managerService.getById(user.getUserid());
+        model.addAttribute("IMmanager", manager);
+        System.out.println(manager.getId() + "      aaaaaaaa    " + password);
+        ResultMessage rmsg = managerService.count(manager.getId(), password);
+        model.addAttribute("message", rmsg.toShow());
+        return new ModelAndView("HostelManagerCount");
     }
 }

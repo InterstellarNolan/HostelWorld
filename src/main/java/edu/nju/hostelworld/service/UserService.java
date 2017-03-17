@@ -10,6 +10,12 @@ import java.util.List;
  */
 public interface UserService {
     /**
+     *
+     * @return
+     */
+    public List<User> getAll();
+
+    /**
      * 系统注册新用户，包括会员、客栈和经理
      * 若用户名已存在则不能注册
      *

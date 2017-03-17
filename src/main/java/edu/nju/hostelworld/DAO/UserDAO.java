@@ -10,6 +10,7 @@ import java.util.Map;
  * Created by Administrator on 2017/3/11.
  */
 public interface UserDAO {
+    public List<User> getAll();
     public User get(int id);
 
     public User load(int id);

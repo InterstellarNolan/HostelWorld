@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Hostel World</title>
+    <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
 <div>
@@ -30,6 +31,8 @@
         <td>姓名</td>
         <td>联系电话</td>
         <td>地址</td>
+        <td>银行卡号</td>
+        <td>银行卡余额</td>
     </tr>
 
     <tr>
@@ -37,6 +40,8 @@
         <td>${managerboss.name}</td>
         <td>${managerboss.phone}</td>
         <td>${managerboss.address}</td>
+        <td>${uservo.bankId}</td>
+        <td>${uservo.bankMoney}</td>
     </tr>
 </table>
 <h2>HostelWorld的入住记录</h2>

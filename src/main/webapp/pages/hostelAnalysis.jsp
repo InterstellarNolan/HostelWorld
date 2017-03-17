@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Hostel World</title>
+    <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
 <div>
@@ -64,6 +65,7 @@
         <td>房间类型</td>
         <td>房间价格</td>
         <td>实付金额</td>
+        <td>是否结算（非会员卡消费无需结算）</td>
     </tr>
     <c:forEach items="${paybillVO}" var="pitem">
         <tr>
@@ -74,6 +76,7 @@
             <td>${pitem.roomName}</td>
             <td>${pitem.roomPrice}</td>
             <td>${pitem.money}</td>
+            <td>${pitem.counted}</td>
         </tr>
     </c:forEach>
 </table>
