@@ -26,8 +26,8 @@
     <div id="nav">
         <ul>
             <li><a href="/register">注册会员</a></li>
+
             <li><a href="/register/hostel">加盟Hostel</a></li>
-            <li><a href="/register/manager">注册经理</a></li>
         </ul>
     </div>
 </div>

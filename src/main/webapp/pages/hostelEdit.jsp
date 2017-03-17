@@ -12,21 +12,32 @@
     <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
-<div>
-    <nav>
-        <ul>
-            <li><a href="<%=request.getContextPath()%>/hostel/home">基本信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/request">开店申请</a></li>
-            <li><a href="#">修改申请</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/rooms">所有房间</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/addroom">新增房间</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/analysis">统计信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/pay">旅客结账</a></li>
-            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
-        </ul>
-    </nav>
+<!-- Header Wrapper -->
+<div id="header-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="12u">
+                <!-- Header -->
+                <section id="header">
+                    <!-- Logo -->
+                    <nav id="nav">
+                        <ul>
+                            <li><a href="<%=request.getContextPath()%>/hostel/home">基本信息</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/request">开店申请</a></li>
+                            <li><a href="#">修改申请</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/rooms">所有房间</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/addroom">新增房间</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/analysis">统计信息</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/pay">旅客结账</a></li>
+                            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
+                        </ul>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
     <form action="<%=request.getContextPath()%>/hostel/edit" method="post">

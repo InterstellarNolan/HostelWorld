@@ -3,7 +3,9 @@ package edu.nju.hostelworld.controller;
 import edu.nju.hostelworld.entity.*;
 import edu.nju.hostelworld.service.HostelService;
 import edu.nju.hostelworld.service.ManagerService;
+import edu.nju.hostelworld.service.MemberService;
 import edu.nju.hostelworld.service.UserService;
+import edu.nju.hostelworld.util.MemberState;
 import edu.nju.hostelworld.util.RequestState;
 import edu.nju.hostelworld.util.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class HostelController {
     UserService userService;
     @Autowired
     ManagerService managerService;
+    @Autowired
+    MemberService memberService;
 
     @RequestMapping(value = "/home")
     public ModelAndView homePage(Model model, HttpServletRequest request) {
@@ -342,13 +346,35 @@ public class HostelController {
         CheckOutVO vo = new CheckOutVO(realName, idCard, Integer.parseInt(memberId) - 1000000, Integer.parseInt(roomId));
         HostelRoom room = hostelService.getRoomById(Integer.parseInt(roomId));
         Double money = room.getPrice();
-        PayVO pvo = new PayVO(realName, idCard, money, Integer.parseInt(memberId) - 1000000, Integer.parseInt(roomId));
+        PayVO pvo;
+        Double realmoney = 0.0;
+        ResultMessage rmsg0, rmsg;
+        if (memberService.getById(Integer.parseInt(memberId) - 1000000).getState().equals(MemberState.UNACTIVATED.toString())) {
+            pvo = new PayVO(realName, idCard, money, 0, Integer.parseInt(roomId));
+            realmoney = hostelService.enrollPay(pvo);
+            rmsg = ResultMessage.VIP_STATE_UNACTIVATED;
+            rmsg0 = hostelService.unVipPay(realmoney);
+        } else if (memberService.getById(Integer.parseInt(memberId) - 1000000).getState().equals(MemberState.STOP.toString())) {
+            pvo = new PayVO(realName, idCard, money, 0, Integer.parseInt(roomId));
+            realmoney = hostelService.enrollPay(pvo);
+            rmsg = ResultMessage.VIP_STATE_STOP;
+            rmsg0 = hostelService.unVipPay(realmoney);
+        } else {
+            pvo = new PayVO(realName, idCard, money, Integer.parseInt(memberId) - 1000000, Integer.parseInt(roomId));
+            realmoney = hostelService.enrollPay(pvo);
+            rmsg0 = hostelService.vipPay(Integer.parseInt(memberId) - 1000000, realmoney);
+            rmsg = ResultMessage.SUCCESS;
+        }
 
-        Double realmoney = hostelService.enrollPay(pvo);
-        ResultMessage rmsg0 = hostelService.vipPay(Integer.parseInt(memberId) - 1000000, realmoney);
-        ResultMessage rmsg = hostelService.depart(vo);
+        //Double realmoney = hostelService.enrollPay(pvo);
+        //if (memberService.getById(Integer.parseInt(memberId) - 1000000).getState().equals(MemberState.UNACTIVATED.toString())) {
+        //hostelService.unVipPay(realmoney);
+        //}
+        //ResultMessage rmsg0 = hostelService.vipPay(Integer.parseInt(memberId) - 1000000, realmoney);
+        ResultMessage rmsg1 = hostelService.depart(vo);
         // model.addAttribute("room", room);
-        model.addAttribute("message", rmsg.toShow());
+        model.addAttribute("message1", rmsg.toShow());
+        model.addAttribute("message", rmsg1.toShow());
         model.addAttribute("realmoney", realmoney.toString());
         model.addAttribute("message0", rmsg0.toShow());
         return new ModelAndView("hostelCheckOutMember");

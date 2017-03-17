@@ -140,10 +140,13 @@ public class ManagerController {
     public ModelAndView countMoney(Model model, HttpServletRequest request, String password) {
         OnLineUserVO userVO = (OnLineUserVO) request.getSession().getAttribute("userVO");
         User user = userService.getById(userVO.getId());
+        System.out.println();
+        System.out.println();
+        System.out.println(user.getUserid());
         Manager manager = managerService.getById(user.getUserid());
         model.addAttribute("IMmanager", manager);
-        System.out.println(manager.getId() + "      aaaaaaaa    " + password);
-        ResultMessage rmsg = managerService.count(manager.getId(), password);
+        System.out.println(user.getId() + "      aaaaaaaa    " + password);
+        ResultMessage rmsg = managerService.count(user.getId(), password);
         model.addAttribute("message", rmsg.toShow());
         return new ModelAndView("HostelManagerCount");
     }

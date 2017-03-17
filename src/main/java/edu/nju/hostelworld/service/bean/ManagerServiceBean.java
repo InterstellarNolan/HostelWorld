@@ -137,7 +137,7 @@ public class ManagerServiceBean implements ManagerService {
                     double moneyShouldBePaid = hostel.getMoneyUncounted();
                     double moneyShouldGet = moneyShouldBePaid * Constants.MANAGER_DISCOUNT;
                     //给客栈加钱
-                    msg = userService.changeBankMoneyAdd(hostel.getId(), moneyShouldGet);
+                    msg = userService.changeBankMoneyAdd(user.getId(), moneyShouldGet);
                     if (msg != ResultMessage.SUCCESS) return msg;
                     //计算累计结算的钱数，最后一起从总经理的银行卡上扣除
                     allMoneyToPay += moneyShouldGet;

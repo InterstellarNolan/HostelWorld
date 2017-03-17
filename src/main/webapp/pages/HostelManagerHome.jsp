@@ -13,8 +13,15 @@
     <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
-<div>
-    <nav>
+<!-- Header Wrapper -->
+<div id="header-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="12u">
+                <!-- Header -->
+                <section id="header">
+                    <!-- Logo -->
+                    <nav id="nav">
         <ul>
             <li><a href="<%=request.getContextPath()%>/HostelManager/home">基本统计信息</a></li>
             <li><a href="<%=request.getContextPath()%>/HostelManager/requestOpen">审批开店申请</a></li>
@@ -23,6 +30,10 @@
             <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
         </ul>
     </nav>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
 <h2>您的信息</h2>
 <table border="2">

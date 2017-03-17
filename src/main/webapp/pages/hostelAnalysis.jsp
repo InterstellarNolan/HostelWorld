@@ -7,29 +7,41 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Hostel World</title>
     <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
-<div>
-    <nav>
-        <ul>
-            <li><a href="<%=request.getContextPath()%>/hostel/home">基本信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/request">开店申请</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/edit">修改申请</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/rooms">所有房间</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/addroom">新增房间</a></li>
-            <li><a href="#">统计信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房</a></li>
-            <li><a href="<%=request.getContextPath()%>/hostel/pay">旅客结账</a></li>
-            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
-        </ul>
-    </nav>
+<!-- Header Wrapper -->
+<div id="header-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="12u">
+                <!-- Header -->
+                <section id="header">
+                    <!-- Logo -->
+                    <nav id="nav">
+                        <ul>
+                            <li><a href="<%=request.getContextPath()%>/hostel/home">基本信息</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/request">开店申请</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/edit">修改申请</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/rooms">所有房间</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/addroom">新增房间</a></li>
+                            <li><a href="#">统计信息</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/checkIn">旅客入住</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/checkOut">旅客退房</a></li>
+                            <li><a href="<%=request.getContextPath()%>/hostel/pay">旅客结账</a></li>
+                            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
+                        </ul>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
+
 <h2>本客栈的房间订房记录</h2>
 <table border="2">
     <tr>
@@ -54,7 +66,7 @@
             <td>${bitem.valid}</td>
         </tr>
     </c:forEach>
-</table> 
+</table>
 <h2>在本客栈消费的的付款记录</h2>
 <table border="2">
     <tr>

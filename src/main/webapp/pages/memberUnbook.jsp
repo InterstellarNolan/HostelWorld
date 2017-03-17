@@ -13,18 +13,29 @@
     <link rel="stylesheet" href="../css/style-desktop.css"/>
 </head>
 <body>
-<div>
-    <nav>
-        <ul>
-            <li><a href="<%=request.getContextPath()%>/member/home">基本信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/hostels">看看客栈</a></li>
-            <li><a href="#">退订房间</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/analysis">统计信息</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/edit">修改资料</a></li>
-            <li><a href="<%=request.getContextPath()%>/member/charge">会员卡充值</a></li>
-            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
-        </ul>
-    </nav>
+<!-- Header Wrapper -->
+<div id="header-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="12u">
+                <!-- Header -->
+                <section id="header">
+                    <!-- Logo -->
+                    <nav id="nav">
+                        <ul>
+                            <li><a href="<%=request.getContextPath()%>/member/home">基本信息</a></li>
+                            <li><a href="<%=request.getContextPath()%>/member/hostels">看看客栈</a></li>
+                            <li><a href="#">退订房间</a></li>
+                            <li><a href="<%=request.getContextPath()%>/member/analysis">统计信息</a></li>
+                            <li><a href="<%=request.getContextPath()%>/member/edit">修改资料</a></li>
+                            <li><a href="<%=request.getContextPath()%>/member/charge">会员卡充值</a></li>
+                            <li><a href="<%=request.getContextPath()%>/logout">登出</a></li>
+                        </ul>
+                    </nav>
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
 
 <table border="2">
