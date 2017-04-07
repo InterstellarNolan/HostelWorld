@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>HostelWorld</title>
-    <%@include file="../common/head.jsp" %>
     <link href="../../css/login.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/w3.css">
     <link>

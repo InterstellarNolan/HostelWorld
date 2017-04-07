@@ -10,14 +10,12 @@ import java.util.List;
  */
 public interface UserService {
     /**
-     *
      * @return
      */
     public List<User> getAll();
 
     /**
-     * 系统注册新用户，包括会员、客栈和经理
-     * 若用户名已存在则不能注册
+     * 系统注册新用户
      *
      * @param userName
      * @param password
@@ -35,7 +33,7 @@ public interface UserService {
     public ResultMessage register(String userName, String password);
 
     /**
-     * 系统删除用户，包括会员、客栈和经理
+     * 系统删除用户
      *
      * @param userId
      * @return
@@ -61,7 +59,7 @@ public interface UserService {
     public ResultMessage changeBankMoneyTo(int id, double money);
 
     /**
-     * 将银行卡余额进行增减，包括付费和银行卡充值等
+     * 将银行卡余额进行增减
      *
      * @param id
      * @param money
@@ -89,7 +87,6 @@ public interface UserService {
 
     /**
      * 用户通过用户名,密码登录，
-     * 若用户存在返回该用户类型，否则返回一个特殊的用户类型
      *
      * @param userName
      * @param password
